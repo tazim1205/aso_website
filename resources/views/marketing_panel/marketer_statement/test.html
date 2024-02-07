@@ -1,0 +1,69 @@
+<table id="example" class="table table-striped table-bordered" cellspacing="0" width="100%">
+                        <thead>
+                            <tr>
+                                <th>Request Date</th>
+                                <th>User Name</th>
+                                <th>Amount</th>
+                                <th>Via</th>
+                                <th>A/c Number</th> 
+                                <th>A/c Details</th> 
+                                <th>Action</th> 
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @forelse ($withdraw_requests as $withdraw_request)
+                            <tr>
+                                <td>{{ Carbon\Carbon::createFromFormat('Y-m-d H:i:s',$withdraw_request->created_at)->format('M d Y') }}</td>  
+                                <td>
+                                    @if (!empty($withdraw_request->user->user_name))
+                                    {{ $withdraw_request->user->user_name }}
+                                    @endif  
+                                </td> 
+                                <td>
+                                    @if (!empty($withdraw_request->amount))
+                                    {{ $withdraw_request->amount }}
+                                    @endif  
+                                </td>
+                                <td>
+                                    @if (!empty($withdraw_request->via))
+                                    {{ $withdraw_request->via }}
+                                    @endif 
+                                </td> 
+                                <td>
+                                    @if (!empty($withdraw_request->ac_number))
+                                    {{ $withdraw_request->ac_number }}
+                                    @endif  
+                                </td>
+                                <td>
+                                    @if (!empty($withdraw_request->ac_details))
+                                    {{ $withdraw_request->ac_details }}
+                                    @endif 
+                                </td> 
+                                <td>
+                                    @if ($withdraw_request->status == "pending")
+                                    <a href="{{route('marketing_panel.witdraw.complete',$withdraw_request->id)}}" id="complete" title="Complete" class="btn btn-lg btn-success"> <i class="fa fa-check text-white" ></i></a>
+                                    
+                                    <a href="{{route('marketing_panel.cancel.req',$withdraw_request->id)}}" id="cancel" title="Cancel" class="btn btn-lg btn-danger"> <i class="fa fa-times"  ></i></a>
+                                    @else 
+                                    {{ $withdraw_request->status == "complete" ? "Completed": "Rejected" }}
+                                    @endif 
+                                </td> 
+                            </tr>
+                            @empty
+                              <tr><h2 class="text-warning">There is no statement</h2></tr>  
+                            @endforelse
+                            
+                             
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th>Request Date</th>
+                                <th>User Name</th>
+                                <th>Amount</th>
+                                <th>Via</th>
+                                <th>A/c Number</th> 
+                                <th>A/c Details</th> 
+                                <th>Action</th> 
+                            </tr>
+                        </tfoot>
+                    </table>
