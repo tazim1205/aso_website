@@ -62,67 +62,20 @@
     <div class="my-container bdr bdr-1">
         <div class="vedio-area">
             <!--video 1-->
+            @php
+            use App\Video;
+            $video = video::all();
+            @endphp
+            @foreach ($video as $v)
             <div class="vedio-area-1">
-                <iframe src="https://www.youtube.com/embed/-zaN48gaEfQ?si=GBcdsh2KtKK1fjCh" title="YouTube video player"
+                <iframe src="{{ $v->link }}" title="YouTube video player"
                         frameborder="0"
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                         allowfullscreen></iframe>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aperiam impedit reiciendis libero quam
-                    officia fugit.
-                <p>
+                <p>{{ $v->description }}
+                <p>    
             </div>
-            <!--video 2-->
-            <div class="vedio-area-1">
-                <iframe src="https://www.youtube.com/embed/-zaN48gaEfQ?si=GBcdsh2KtKK1fjCh" title="YouTube video player"
-                        frameborder="0"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                        allowfullscreen></iframe>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aperiam impedit reiciendis libero quam
-                    officia fugit.
-                <p>
-            </div>
-            <!--video 3-->
-            <div class="vedio-area-1">
-                <iframe src="https://www.youtube.com/embed/-zaN48gaEfQ?si=GBcdsh2KtKK1fjCh" title="YouTube video player"
-                        frameborder="0"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                        allowfullscreen></iframe>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aperiam impedit reiciendis libero quam
-                    officia fugit.
-                <p>
-            </div>
-            <!--video 4-->
-            <div class="vedio-area-1">
-                <iframe src="https://www.youtube.com/embed/-zaN48gaEfQ?si=GBcdsh2KtKK1fjCh" title="YouTube video player"
-                        frameborder="0"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                        allowfullscreen></iframe>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aperiam impedit reiciendis libero quam
-                    officia fugit.
-                <p>
-            </div>
-            <!--video 5-->
-            <div class="vedio-area-1">
-                <iframe src="https://www.youtube.com/embed/-zaN48gaEfQ?si=GBcdsh2KtKK1fjCh" title="YouTube video player"
-                        frameborder="0"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                        allowfullscreen></iframe>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aperiam impedit reiciendis libero quam
-                    officia fugit.
-                <p>
-            </div>
-            <!--video 6-->
-            <div class="vedio-area-1">
-                <iframe src="https://www.youtube.com/embed/-zaN48gaEfQ?si=GBcdsh2KtKK1fjCh" title="YouTube video player"
-                        frameborder="0"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                        allowfullscreen></iframe>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aperiam impedit reiciendis libero quam
-                    officia fugit.
-                <p>
-            </div>
-
-
+            @endforeach
         </div>
 
 

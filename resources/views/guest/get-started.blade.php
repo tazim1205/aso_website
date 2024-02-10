@@ -11,6 +11,68 @@
         <a href="{{ route('customer.create.service') }}"><div class="catagory-post"> <div><p>প্রয়োজন অনুযায়ী সার্ভিস বা কাজের পোষ্ট করুন...</p></div><div><i class="fa-solid fa-pen-to-square"></i></div></div></a>
 
 
+        <!-- carousel-->
+        @php
+
+        use App\AdminAds;
+        $ads = AdminAds::where("image",1)->orderBy('id','DESC')->get();
+
+        @endphp
+        
+        <div id="carouselExample" class="carousel slide">
+            <div class="carousel-inner">
+                @foreach($ads as $a)
+                <div class="carousel-item active">
+                    <img src="{{asset('uploads/images/admin/')}}/{{$a->image}}" class="d-block w-100" alt="...">
+                </div>
+                @endforeach
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+        <!-- slider area -->
+          
+        <!-- <div id="slider" class="carousel slide" data-bs-ride="carousel" data-bs-touch="true">
+      
+            <div class="carousel-inner">
+              <div class="carousel-item active">
+                <img class="d-block w-100" src="{{ asset('assets/images/carousel/01.jpg') }}" alt="First slide">
+              </div>
+            
+              <div class="carousel-item active">
+                <img class="d-block w-100" src="{{ asset('assets/images/carousel/02.jpg') }}" alt="First slide">
+              </div>
+              <div class="carousel-item">
+                <img class="d-block w-100" src="{{ asset('assets/images/carousel/03.jpg') }}" alt="Third slide">
+              </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#slider" data-bs-slide="prev">
+              <span class="carousel-control-prev-icon"></span>
+       
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#slider" data-bs-slide="next">
+                <span class="carousel-control-next-icon"></span>
+         
+            </button>
+    
+            <div class="carousel-indicators">
+                <button type="button" data-bs-target="#slide" data-bs-slide-to="0" class="active"></button>
+                <button type="button" data-bs-target="#slide" data-bs-slide-to="1"></button>
+                <button type="button" data-bs-target="#slide" data-bs-slide-to="2"></button>
+              
+            </div>
+            
+        </div> -->
+
+     <!-- carousel end-->
+
+
     </div>
     <div class="all-bid"><a href="#">সার্ভিসসমূহ</a></div>
 

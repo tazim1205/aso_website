@@ -59,7 +59,9 @@
                                                     class="edit-button btn btn-outline-warning waves-effect waves-light btn-sm"
                                                 > <i class="fa fa-edit"></i> </button>
 
-                                                <a href="javascript:void(0);" class="btn btn-danger waves-effect waves-light  delete-submit-button btn-sm" ><i class="fa fa-trash"></i></a>
+                                                <a href="{{ route('admin.destroyVideoController', $video->id) }}" class="btn btn-inverse-danger waves-effect waves-light btn-sm">
+                                                    <i class="fa fa-trash-o"></i>{{ __(' Delete') }}
+                                                </a>
 
 
                                             </td>

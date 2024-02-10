@@ -38,7 +38,13 @@
                         </a>
                     </li>
                     <li class="dropdown-item" > <a href="{{ route('admin.profile.index') }}"><i class="icon-user mr-2"></i> {{ __('Profile') }} </a> </li>
-                    <li class="dropdown-item" onclick="logout()"> <a  style="cursor: pointer;"><i class="icon-power mr-2"></i> {{ __('Logout') }}</a> </li>
+                    <li class="dropdown-item" onclick="logout()">
+                        <form action="{{ route('logout') }}" method="post">
+                            @csrf
+                            <i class="mdi mdi-logout me-1"></i>
+                            <button class="border-0 px-0 bg-transparent" type="submit"> {{ __('Logout') }}</button>
+                        </form>
+                    </li>
                 </ul>
             </li>
         </ul>
