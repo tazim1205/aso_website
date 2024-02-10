@@ -17,7 +17,7 @@ class CreateAdminAdsTable extends Migration
             $table->id();
             $table->foreignId('admin_id');
             $table->string('url')->nullable();
-            $table->string('image');
+            $table->string('image')->default(0);
             $table->date('starting');
             $table->date('ending');
             $table->boolean('status')->default(1);

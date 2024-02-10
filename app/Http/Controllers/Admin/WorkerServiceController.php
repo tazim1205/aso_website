@@ -152,6 +152,8 @@ class WorkerServiceController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $service = WorkerService::find($id)->delete();
+
+        return redirect()->back()->with('success');
     }
 }

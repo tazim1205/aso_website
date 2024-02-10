@@ -15,17 +15,17 @@
         @php
 
         use App\AdminAds;
-        $ads = AdminAds::where("image",1)->orderBy('id','DESC')->get();
+        $ads = AdminAds::get();
 
         @endphp
         
-        <div id="carouselExample" class="carousel slide">
+        <!-- <div id="carouselExample" class="carousel slide">
             <div class="carousel-inner">
-                @foreach($ads as $a)
+                
                 <div class="carousel-item active">
-                    <img src="{{asset('uploads/images/admin/')}}/{{$a->image}}" class="d-block w-100" alt="...">
+                    <img  class="d-block w-100" alt="...">
                 </div>
-                @endforeach
+                
             </div>
             <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -35,22 +35,19 @@
                 <span class="carousel-control-next-icon" aria-hidden="true"></span>
                 <span class="visually-hidden">Next</span>
             </button>
-        </div>
+        </div> -->
         <!-- slider area -->
           
-        <!-- <div id="slider" class="carousel slide" data-bs-ride="carousel" data-bs-touch="true">
+        <div id="slider" class="carousel slide" data-bs-ride="carousel" data-bs-touch="true">
       
             <div class="carousel-inner">
-              <div class="carousel-item active">
-                <img class="d-block w-100" src="{{ asset('assets/images/carousel/01.jpg') }}" alt="First slide">
-              </div>
-            
-              <div class="carousel-item active">
-                <img class="d-block w-100" src="{{ asset('assets/images/carousel/02.jpg') }}" alt="First slide">
-              </div>
-              <div class="carousel-item">
-                <img class="d-block w-100" src="{{ asset('assets/images/carousel/03.jpg') }}" alt="Third slide">
-              </div>
+                @if($ads)
+                @foreach($ads as $a)
+                <div class="carousel-item active">
+                    <img class="d-block w-100" src="{{asset($a->image)}}" alt="First slide">
+                </div>
+                @endforeach
+                @endif
             </div>
             <button class="carousel-control-prev" type="button" data-bs-target="#slider" data-bs-slide="prev">
               <span class="carousel-control-prev-icon"></span>
@@ -68,7 +65,7 @@
               
             </div>
             
-        </div> -->
+        </div>
 
      <!-- carousel end-->
 

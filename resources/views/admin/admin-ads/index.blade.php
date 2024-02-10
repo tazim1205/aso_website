@@ -227,6 +227,7 @@
                formData.append('endingDate', $('#ending-date').val())
                formData.append('activation', $('#activation').val())
                formData.append('image', $('#image')[0].files[0])
+               console.log(formData);
                $.ajax({
                    method: 'POST',
                    url: '/admin/admin-ads',
