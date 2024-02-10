@@ -44,4 +44,11 @@ class VideoController extends Controller
 
         return $video;
     }
+
+    public function destroy($id)
+    {
+        $video = video::find($id)->delete();
+
+        return redirect()->back()->with('success');
+    }
 }

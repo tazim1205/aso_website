@@ -30,12 +30,12 @@
                 <li><a href="{{ route('customer.home.index') }}">Dashboard</a></li>
             @endguest
 
-            <li><a href="" class="u-1"><i class="fa-solid fa-bars"></i></a></li>
+            <li><a href="javascript:void(0);" class="location"><i class="fa fa-map-marker" aria-hidden="true"></i></a></li>
         </ul>
     </div>
 
 </div>
-<div class="icon-nav icon-nav-2">
+<!-- <div class="icon-nav icon-nav-2">
     <div class="icon-nav-flex">
         <ul class="my-flex">
             <li class="@if(Route::is('get.started')) under @endif"><a href="{{ route('get.started') }}"><i class="fa-solid fa-house  @if(Route::is('get.started')) blue @endif"></i></a></li>
@@ -45,7 +45,7 @@
             <li class=""><a href="#"><i class="fa-solid fa-bars three-dot-2"></i></a></li>
         </ul>
     </div>
-</div>
+</div> -->
 @yield('content')
 
 @include('guest.sidebar')

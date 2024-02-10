@@ -217,6 +217,7 @@ Route::group(['namespace' => 'Admin', 'as' => 'admin.', 'prefix' => 'admin', 'mi
     Route::get('/video', 'VideoController@index')->name('video.index');
     Route::post('/video/store', 'VideoController@store')->name('video.store');
     Route::post('/video/update', 'VideoController@update')->name('video.update');
+    Route::get('/video/delete/{id}', 'VideoController@destroy')->name('destroyVideoController');
 
 });
 
