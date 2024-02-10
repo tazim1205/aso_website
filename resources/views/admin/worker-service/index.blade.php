@@ -42,7 +42,7 @@
                                         <td scope="row">{{ $loop->iteration }}</td>
                                         <td><img src="{{ asset('uploads/images/worker/service/'.$service->icon) }}" height="50px" width="50px" style="border-radius: 15px;"></td>
                                         <td>{{ $service->name }}</td>
-                                        <td>{{ $service->category->name }}</td>
+                                        <td>{{ $service->category_name }}</td>
                                         <td>{{ $service->comission_rate ?? 0 }} %</td>
                                         <td>{{ $service->marketer_comission ?? 0 }} %</td>
                                         <td>
@@ -55,6 +55,7 @@
                                             <input type="hidden" class="hidden_job_post" value="{{ $service->job_post }}">
                                             <input type="hidden" class="hidden_page_post" value="{{ $service->page_post }}">
                                             <button type="button" id="edit" class="edit-button btn btn-outline-warning waves-effect waves-light m-1"> <i class="fa fa-edit"></i> </button>
+                                            <a href="{{ route('admin.destroyWorkerService', $service->id) }}" class="btn btn-outline-danger waves-effect waves-light m-1" onclick="return confirm('Are You Sure ?')"><i class="fa fa-trash"></i></a>
                                         </td>
                                     </tr>
                                     @endforeach

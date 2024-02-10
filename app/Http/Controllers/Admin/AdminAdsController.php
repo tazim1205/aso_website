@@ -45,7 +45,6 @@ class AdminAdsController extends Controller
             'url'           => 'nullable',
             'startingDate'  => 'required',
             'endingDate'    => 'required',
-            'image'         => 'required|image',
         ]);
         $ads = new AdminAds();
         $ads->admin_id = Auth::user()->id;
@@ -63,13 +62,13 @@ class AdminAdsController extends Controller
 
         if($request->hasFile('image')){
             $image             = $request->file('image');
-            $folder_path       = 'uploads/images/admin/';
-            $image_new_name    = Str::random(8).'-admin-ads--'.Carbon::now()->format('d-m-Y H-i-s') .'.'. $image->getClientOriginalExtension();
+            $path       = 'uploads/images/admin/';
+            $image_new_name    = rand().'.'.$image->getClientOriginalExtension();
             //resize and save to server
             Image::make($image->getRealPath())->resize(500, 300, function($constraint){
                 $constraint->aspectRatio();
-            })->save($folder_path.$image_new_name);
-            $ads->image    = $folder_path.$image_new_name;
+            })->save($path.$image_new_name);
+            $ads->image    = $path.$image_new_name;
         }
 
         $ads->save();

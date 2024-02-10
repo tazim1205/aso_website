@@ -41,7 +41,6 @@ class WorkerServiceCategoryController extends Controller
     {
         $request->validate([
             'name' => 'required|unique:worker_service_categories',
-            'icon' => 'nullable|image',
         ]);
         $category = new WorkerServiceCategory();
         $category->name = $request->input('name');
@@ -128,6 +127,8 @@ class WorkerServiceCategoryController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $category = WorkerServiceCategory::find($id)->delete();
+
+        return redirect()->back()->with('success');
     }
 }

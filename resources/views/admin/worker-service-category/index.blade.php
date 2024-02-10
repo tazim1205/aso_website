@@ -43,6 +43,7 @@
                                             <input type="hidden" class="hidden-id" value="{{ $category->id }}">
                                             <input type="hidden" class="hidden_meta_tag" value="{{ $category->meta_tag }}">
                                             <button type="button" id="edit" class="edit-button btn btn-outline-warning waves-effect waves-light m-1"> <i class="fa fa-edit"></i> </button>
+                                            <a href="{{ route('admin.destroyWorkerCategory', $category->id) }}" class="btn btn-outline-danger waves-effect waves-light m-1" onclick="return confirm('Are You Sure ?')"><i class="fa fa-trash"></i></a>
                                         </td>
                                     </tr>
                                     @endforeach

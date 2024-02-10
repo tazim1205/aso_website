@@ -143,7 +143,9 @@ Route::group(['namespace' => 'Admin', 'as' => 'admin.', 'prefix' => 'admin', 'mi
 
     Route::resource('worker-service-category', 'WorkerServiceCategoryController')->except(['create', 'show', 'edit', 'update', 'destroy']);
     Route::post('worker-service-category/update', 'WorkerServiceCategoryController@update');
+    Route::get('/worker-service-category/delete/{id}', 'WorkerServiceCategoryController@destroy')->name('destroyWorkerCategory');
     Route::resource('worker-service', 'WorkerServiceController')->except(['create', 'show', 'edit', 'update', 'destroy']);
+    Route::get('/worker-service/delete/{id}', 'WorkerServiceController@destroy')->name('destroyWorkerService');
     Route::post('worker-service/update', 'WorkerServiceController@update');
 
     Route::resource('membership-service-category', 'MembershipServiceCategoryController')->except(['create', 'show', 'edit', 'update', 'destroy']);
