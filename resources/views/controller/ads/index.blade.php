@@ -182,24 +182,24 @@
                                                     <tr>
                                                         <td> {{ $loop->iteration }}</td>
                                                         <td>
-                                                            <img class="card-img-top" src="{{ asset($ads->image) }}"
+                                                            <img class="card-img-top" src="{{ asset($notice->image) }}"
                                                                  alt="Card image cap">
                                                         </td>
                                                         <td>
                                                             title
                                                         </td>
                                                         <td>
-                                                            <span>{{ $ads->starting  }}</span>
+                                                            <span>{{ $notice->starting  }}</span>
                                                         </td>
                                                         <td>
-                                                            <span>{{ $ads->ending }}</span>
+                                                            <span>{{ $notice->ending }}</span>
                                                         </td>
 
                                                         <td>
                                                             <span>
-                                                                @if($ads->status == 0)
+                                                                @if($notice->status == 0)
                                                                     Inactive
-                                                                @elseif($ads->starting < \Carbon\Carbon::today()->addDays(1) && $ads->ending > \Carbon\Carbon::today()->addDays(-1))
+                                                                @elseif($notice->starting < \Carbon\Carbon::today()->addDays(1) && $notice->ending > \Carbon\Carbon::today()->addDays(-1))
                                                                     Running
                                                                 @else
                                                                     Completed

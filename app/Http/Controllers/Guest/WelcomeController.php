@@ -100,6 +100,10 @@ class WelcomeController extends Controller
         return view('guest.get-started',compact('categories','district','upazila','puroshova','word','adminNotice', 'adminAds','specialServices'));
     }
 
+    public function jobpost(){
+        return view('guest.jobpost');
+    }
+
     public function changeArea()
     {
         $district = District::all();
