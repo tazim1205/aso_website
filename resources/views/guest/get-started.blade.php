@@ -8,35 +8,22 @@
                     Session::get('location')['district']->name }} > {{ Session::get('location')['upazila']->name }} > {{
                     Session::get('location')['puroshova']->name }} > {{ Session::get('location')['word']->name }}</p>
         </div>
-        <a href="{{ route('customer.create.service') }}"><div class="catagory-post"> <div><p>প্রয়োজন অনুযায়ী সার্ভিস বা কাজের পোষ্ট করুন...</p></div><div><i class="fa-solid fa-pen-to-square"></i></div></div></a>
+        <a href="{{ route('jobpost') }}"><div class="catagory-post"> <div><p>প্রয়োজন অনুযায়ী সার্ভিস বা কাজের পোষ্ট করুন...</p></div><div><i class="fa-solid fa-pen-to-square"></i></div></div></a>
 
 
         <!-- carousel-->
         @php
 
         use App\AdminAds;
+        use App\ControllerAds;
+
         $ads = AdminAds::get();
+
+        $controllerads = ControllerAds::where('controller_id',12)->active()->get();
 
         @endphp
         
-        <!-- <div id="carouselExample" class="carousel slide">
-            <div class="carousel-inner">
-                
-                <div class="carousel-item active">
-                    <img  class="d-block w-100" alt="...">
-                </div>
-                
-            </div>
-            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Previous</span>
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Next</span>
-            </button>
-        </div> -->
-        <!-- slider area -->
+        <!-- admin ads area -->
           
         <div id="slider" class="carousel slide" data-bs-ride="carousel" data-bs-touch="true">
       
@@ -67,7 +54,7 @@
             
         </div>
 
-     <!-- carousel end-->
+        <!-- admin ads area end-->
 
 
     </div>
@@ -80,16 +67,50 @@
             @foreach($categories as $category)
                 <div class="catagory-child">
                     <div class="catagory-image">
-                        <a href="sub_catagory_9.html"><img src="{{ asset('/uploads/images/worker/service-category/'.$category->icon) }}" height="70px"
-                                                           width="70px" style=""></a>
+                        <a href="{{ route('showServices',\Illuminate\Support\Facades\Crypt::encryptString($category->id)) }}"><img src="{{ asset('/uploads/images/worker/service-category/'.$category->icon) }}" height="70px" width="70px" style=""></a>
                     </div>
-                    <h4><a href="{{ route('customer.showServices',$category->meta_tag ?? $category->id) }}">{{ $category->name }}</a></h4>
+                    <h4><a href="{{ route('showServices',\Illuminate\Support\Facades\Crypt::encryptString($category->id)) }}">{{ $category->name }}</a></h4>
                 </div>
             @endforeach
         </div>
 
 
     </div>
+
+
+    <!-- admin ads area -->
+
+    <div class="wrapper-area">
+        
+        <div id="demo" class="carousel slide" data-bs-ride="carousel">
+            <!-- Indicators/dots -->
+            <div class="carousel-indicators">
+                <button type="button" data-bs-target="#demo" data-bs-slide-to="0" class="active"></button>
+                <button type="button" data-bs-target="#demo" data-bs-slide-to="1"></button>
+                <button type="button" data-bs-target="#demo" data-bs-slide-to="2"></button>
+            </div>
+            <!-- The slideshow/carousel -->
+            <div class="carousel-inner">
+
+                @if($controllerads)
+                @foreach($controllerads as $c)
+                <div class="carousel-item active">
+                    <img class="d-block" src="{{asset($c->image)}}" style="width:100%">
+                </div>
+                @endforeach
+                @endif
+            </div>
+            <!-- Left and right controls/icons -->
+            <button class="carousel-control-prev" type="button" data-bs-target="#demo" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon"></span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#demo" data-bs-slide="next">
+                <span class="carousel-control-next-icon"></span>
+            </button>
+        </div>
+        
+    </div>
+    <!-- admin ads area end-->
 
     <div class="all-bid"><a href="#">স্পেশাল সার্ভিস
         </a></div>

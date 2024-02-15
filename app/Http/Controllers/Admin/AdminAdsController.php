@@ -145,10 +145,20 @@ class AdminAdsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+
+    public function destroy(Request $request, $id)
     {
-        $ads = AdminAds::find($id);
-        $ads->delete();
-        return redirect()->back()->with('success', 'Ads deleted successfully');
+        if ($request->ajax()){
+
+            $ads = AdminAds::findOrFail($id);
+
+            if ($ads){
+
+                $ads->delete();
+
+                return response()->json(array('success' => true));
+            }
+
+        }
     }
 }

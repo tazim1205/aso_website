@@ -64,6 +64,7 @@ Route::group(['namespace' => 'Guest'], function () {
 
 Route::group(['namespace' => 'Guest', 'middleware' => ['guest']], function () {
     Route::get('/get-started', 'WelcomeController@Getstarted')->name('getstart');
+    Route::get('/jobpost', 'WelcomeController@jobpost')->name('jobpost');
     Route::get('/services/{id}', 'WelcomeController@showServices')->name('showServices');
     Route::get('/gig/{id}', 'WelcomeController@show')->name('showGigs');
     Route::get('/gig-details/{id}', 'WelcomeController@showGigDetail')->name('showGigDetail');
@@ -168,7 +169,7 @@ Route::group(['namespace' => 'Admin', 'as' => 'admin.', 'prefix' => 'admin', 'mi
     Route::post('controller-notice/update', 'ControllerNoticeController@update')->name('updateControllerNotice');
 
     Route::resource('admin-ads', 'AdminAdsController');
-    Route::get('/admin-ads/delete/{id}', 'AdminAdsController@destroy')->name('destroyAdminAds');
+    Route::delete('/admin-ads/delete/{id}','AdminAdsController@destroy');
     Route::post('admin-ads/update', 'AdminAdsController@update')->name('updateAdminAds');
     Route::resource('controller-ads', 'ControllerAdsController');
     Route::get('/controller-ads/delete/{id}', 'ControllerAdsController@destroy')->name('destroyControllerAds');

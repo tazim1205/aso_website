@@ -33,6 +33,11 @@
                                         Inactive Ads
                                     </a>
                                 </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="deleted-data" data-toggle="tab" href="#deleted" role="tab" aria-controls="inactive" aria-selected="false">
+                                        Deleted Data
+                                    </a>
+                                </li>
                             </ul>
                             <div class="tab-content" id="myTabContent">
                                 <div class="tab-pane fade show active" id="active" role="tabpanel" aria-labelledby="active-tab">
@@ -77,7 +82,7 @@
                                                             <input type="hidden" class="hidden-id" value="{{ $ads->id }}">
                                                             <a @if($ads->url) href="{{ $ads->url }}" target="_blank" @else  href="#" @endif  class="card-link">{{ __('Ads. Link') }}</a>
                                                             <a href="javascript:void();" class="card-link edit-button">{{ __('Edit Now') }}</a>
-                                                            <a href="{{ route('admin.destroyAdminAds', $ads->id) }}" class="card-link">Delete</a>
+                                                            <a onclick="deleteItem(this)" href="javascript:void();" data-id="{{ $ads->id }}">Delete</a>
                                                         </td>
                                                     </tr>
                                                 @endforeach
@@ -136,6 +141,59 @@
                                             </table>
                                         </div>
                                     </div>
+                                </div>
+                                
+                                <div class="tab-pane fade" id="deleted" role="tabpanel" aria-labelledby="deleted-data">
+                                    <div class="row">
+                                        <h5 class="card-title">Deleted Data</h5>
+                                        <div class="table-responsive">
+                                            <table  class="table" id="datatable">
+                                                <thead class="thead-success shadow-success">
+                                                <tr>
+                                                    <th scope="col">{{ __('Image') }}</th>
+                                                    <th scope="col">{{ __('Status') }}</th>
+                                                    <th scope="col">{{ __('Starting') }}</th>
+                                                    <th scope="col">{{ __('Ending') }}</th>
+                                                    <th scope="col">{{ __('Created At') }}</th>
+                                                    <th scope="col">{{ __('Action') }}</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                @foreach($inactiveAds as $ads)
+                                                    <tr>
+                                                        <td><img src="{{ asset($ads->image) }}" class="card-img-top" alt="" width="128px"></td>
+                                                        <td>
+                                                            @if($ads->status == 0)
+                                                                <span class="badge badge-danger badge-pill"> {{ __('Inactive') }} </span>
+                                                            @elseif($ads->starting < \Carbon\Carbon::today()->addDays(1) && $ads->ending > \Carbon\Carbon::today()->addDays(-1))
+                                                                <span class="badge badge-success badge-pill"> {{ __('Running') }} </span>
+                                                            @else
+                                                                <span class="badge badge-info badge-pill"> {{ __('Completed') }} </span>
+                                                            @endif
+                                                        </td>
+                                                        <td>
+                                                            <span class="badge badge-success badge-pill start">{{ $ads->starting  }}</span>
+                                                        </td>
+                                                        <td>
+                                                            <span class="badge badge-danger badge-pill end">{{ $ads->ending }}</span>
+                                                        </td>
+                                                        <td>
+                                                            <span class="badge badge-dark badge-pill">{{ date('d/m/Y h-m-s', strtotime($ads->created_at)) }}</span>
+                                                        </td>
+                                                        <td>
+                                                            <input type="hidden" class="hidden-url" value="{{ $ads->url }}">
+                                                            <input type="hidden" class="hidden-id" value="{{ $ads->id }}">
+                                                            <a @if($ads->url) href="{{ $ads->url }}" target="_blank" @else  href="#" @endif  class="card-link">{{ __('Ads. Link') }}</a>
+                                                            <a href="javascript:void();" class="card-link edit-button">{{ __('Edit Now') }}</a>
+                                                            <a href="{{ route('admin.destroyAdminAds', $ads->id) }}" class="card-link">Delete</a>
+                                                        </td>
+                                                    </tr>
+                                                @endforeach
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+
                                 </div>
                             </div>
                         </div>
@@ -341,6 +399,68 @@
         });
 
     </script>
+
+<script type="application/javascript">
+
+function deleteItem(e){
+
+    let id = e.getAttribute('data-id');
+
+    const swalWithBootstrapButtons = Swal.mixin({
+        customClass: {
+            confirmButton: 'btn btn-success',
+            cancelButton: 'btn btn-danger'
+        },
+        buttonsStyling: false
+    });
+
+    swalWithBootstrapButtons.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Yes, delete it!',
+        cancelButtonText: 'No, cancel!',
+        reverseButtons: true
+    }).then((result) => {
+        if (result.value) {
+            if (result.isConfirmed){
+
+                $.ajax({
+                    type:'DELETE',
+                    url:'{{url("admin/admin-ads/")}}/' +id,
+                    data:{
+                        "_token": "{{ csrf_token() }}",
+                    },
+                    success:function(data) {
+                        if (data.success){
+                            swalWithBootstrapButtons.fire(
+                                'Deleted!',
+                                'Your file has been deleted.',
+                                "success"
+                            );
+                            $("#"+id+"").remove(); // you can add name div to remove
+                        }
+
+                    }
+                });
+
+            }
+
+        } else if (
+            result.dismiss === Swal.DismissReason.cancel
+        ) {
+            swalWithBootstrapButtons.fire(
+                'Cancelled',
+                'Your imaginary file is safe :)',
+                'error'
+            );
+        }
+    });
+
+}
+
+</script>
 
 @endsection
 @push('foot')
