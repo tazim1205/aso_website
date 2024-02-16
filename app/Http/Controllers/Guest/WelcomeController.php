@@ -134,19 +134,20 @@ class WelcomeController extends Controller
         return view('guest.services',compact('category','district','upazila','puroshova','word'));
     }
 
-    public function show($id)
+    public function showGig($id)
     {
-         $district = District::all();
+        $district = District::all();
         $upazila = Upazila::all();
         $puroshova = Puroshova::all();
         $word = Word::all();
         $service = WorkerService::find(Crypt::decryptString($id));
         $mamberships = MembershipPackage::withTrashed()->orderby('position', 'asc')->get();
-        $pages = WorkerPage::where('visibility', 'show')->where('status', 1)->latest()->inRandomOrder()->get();
+        $pages = WorkerPage::where('visibility', 'show')->where('status', 'active')->latest()->inRandomOrder()->get();
+        
         return view('guest.gig',compact('service','district','upazila','puroshova','word','mamberships','pages'));
     }
 
-    public function showGigDetail($id)
+    public function showGigDetails($id)
     {
          $district = District::all();
         $upazila = Upazila::all();

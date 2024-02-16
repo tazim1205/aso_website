@@ -66,8 +66,8 @@ Route::group(['namespace' => 'Guest', 'middleware' => ['guest']], function () {
     Route::get('/get-started', 'WelcomeController@Getstarted')->name('getstart');
     Route::get('/jobpost', 'WelcomeController@jobpost')->name('jobpost');
     Route::get('/services/{id}', 'WelcomeController@showServices')->name('showServices');
-    Route::get('/gig/{id}', 'WelcomeController@show')->name('showGigs');
-    Route::get('/gig-details/{id}', 'WelcomeController@showGigDetail')->name('showGigDetail');
+    Route::get('/gig/{id}', 'WelcomeController@showGig')->name('showGig');
+    Route::get('/gig-details/{id}', 'WelcomeController@showGigDetails')->name('showGigDetails');
 
     // Get Started
     Route::get('/get-started', 'WelcomeController@getStarted')->name('get.started');
