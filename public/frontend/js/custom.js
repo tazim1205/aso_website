@@ -21,6 +21,12 @@
         $('.loc-area').slideToggle();
 
     });
+    
+    $('.location2').on('click', function(){
+
+        $('.loc-area2').slideToggle();
+
+    });
 
     
     $('.bajed').on('click', function(){

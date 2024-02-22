@@ -21,8 +21,9 @@
             @foreach($categories as $category)
             <div class="catagory-child">
                 <div class="catagory-image">
-                    <a href="sub_catagory_9.html"><img src="{{ asset('/uploads/images/worker/service-category/'.$category->icon) }}" height="70px"
-                                                       width="70px" style=""></a>
+                    <a href="{{ route('customer.showServices',$category->meta_tag ?? $category->id) }}">
+                        <img src="{{ asset('/uploads/images/worker/service-category/'.$category->icon) }}" height="70px" width="70px" style="">
+                    </a>
                 </div>
                 <h4><a href="{{ route('customer.showServices',$category->meta_tag ?? $category->id) }}">{{ $category->name }}</a></h4>
             </div>

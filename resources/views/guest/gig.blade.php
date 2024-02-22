@@ -231,7 +231,7 @@
                 // alert(page_id);
                 $.ajax({
                     method: 'POST',
-                    url: "{{ route('customer.pageClick') }}",
+                    url: "{{ route('pageClick') }}",
                     headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
                     data: {page_id:page_id},
                     // processData: false,

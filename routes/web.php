@@ -65,9 +65,15 @@ Route::group(['namespace' => 'Guest'], function () {
 Route::group(['namespace' => 'Guest', 'middleware' => ['guest']], function () {
     Route::get('/get-started', 'WelcomeController@Getstarted')->name('getstart');
     Route::get('/jobpost', 'WelcomeController@jobpost')->name('jobpost');
-    Route::get('/services/{id}', 'WelcomeController@showServices')->name('showServices');
+    Route::get('/service/{id}', 'WelcomeController@showService')->name('showService');
     Route::get('/gig/{id}', 'WelcomeController@showGig')->name('showGig');
     Route::get('/gig-details/{id}', 'WelcomeController@showGigDetails')->name('showGigDetails');
+    Route::get('/gig-details/order/{id}', 'WelcomeController@showOrderForms')->name('showGigOrderForms');
+    Route::post('/', 'WelcomeController@store')->name('storeGuestGig');
+
+
+    Route::get('/page/{id}', 'WelcomeController@show')->name('showPages');
+    Route::post('/page/click/increase', 'WelcomeController@pageClick')->name('pageClick');
 
     // Get Started
     Route::get('/get-started', 'WelcomeController@getStarted')->name('get.started');
@@ -171,6 +177,10 @@ Route::group(['namespace' => 'Admin', 'as' => 'admin.', 'prefix' => 'admin', 'mi
     Route::resource('admin-ads', 'AdminAdsController');
     Route::delete('/admin-ads/delete/{id}','AdminAdsController@destroy');
     Route::post('admin-ads/update', 'AdminAdsController@update')->name('updateAdminAds');
+    Route::get('/admin-ads/delete/{id}', 'AdminAdsController@destroy')->name('destroyAdminAds');
+    Route::get('/admin-ads/restore/{id}', 'AdminAdsController@restore')->name('restoreAdminAds');
+    Route::get('/admin-ads/trash/{id}', 'AdminAdsController@deletedListIndex')->name('trashAdminAds');
+
     Route::resource('controller-ads', 'ControllerAdsController');
     Route::get('/controller-ads/delete/{id}', 'ControllerAdsController@destroy')->name('destroyControllerAds');
     Route::post('controller-ads/update', 'ControllerAdsController@update')->name('updateControllerAds');
