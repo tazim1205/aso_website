@@ -29,6 +29,7 @@ use App\SpecialService;
 use App\SpecialServiceOrder;
 use App\MembershipPackage;
 use App\WorkerPage;
+use App\Blog;
 
 
 use DB;
@@ -124,14 +125,14 @@ class WelcomeController extends Controller
         return redirect('/get-started');
     }
 
-    public function showServices($id)
+    public function showService($id)
     {
         $district = District::all();
         $upazila = Upazila::all();
         $puroshova = Puroshova::all();
         $word = Word::all();
         $category = WorkerServiceCategory::find(Crypt::decryptString($id));
-        return view('guest.services',compact('category','district','upazila','puroshova','word'));
+        return view('guest.service',compact('category','district','upazila','puroshova','word'));
     }
 
     public function showGig($id)
@@ -140,8 +141,8 @@ class WelcomeController extends Controller
         $upazila = Upazila::all();
         $puroshova = Puroshova::all();
         $word = Word::all();
-        $service = WorkerService::find(Crypt::decryptString($id));
         $mamberships = MembershipPackage::withTrashed()->orderby('position', 'asc')->get();
+        $service = WorkerService::find(Crypt::decryptString($id));
         $pages = WorkerPage::where('visibility', 'show')->where('status', 'active')->latest()->inRandomOrder()->get();
         
         return view('guest.gig',compact('service','district','upazila','puroshova','word','mamberships','pages'));
@@ -149,7 +150,7 @@ class WelcomeController extends Controller
 
     public function showGigDetails($id)
     {
-         $district = District::all();
+        $district = District::all();
         $upazila = Upazila::all();
         $puroshova = Puroshova::all();
         $word = Word::all();
@@ -202,46 +203,76 @@ class WelcomeController extends Controller
         }
     }
 
+    /**
+     * @param $id
+     * @return \Illuminate\View\View
+     */
+    public function showOrderForm($id)
+    {
+
+        $gig = WorkerGig::find(Crypt::decryptString($id));
+        return view('guest.order-form',compact('gig'));
+    }
+
     public function gigList($service_id,$budget,$min_budget,$max_budget,$delivery_time,$rating,$timely_delivery_rate,$order_complete_rate,$now_online,$recent_online,$recent_order_delivery){
 
+        $service = WorkerService::find($service_id);
+        $query = WorkerGig::serviceId($service_id)->active();
         if (isset($budget) && $budget != 0) {
             if ($budget == 'High To Low') {
-                $gigs = WorkerGig::where('service_id',$service_id)->where('status', 1)->orderByDesc('budget')->get();
+                $gig = $query->orderByDesc('budget')->get();
             }else{
-                $gigs = WorkerGig::where('service_id',$service_id)->where('status', 1)->get();
+                $gig = $query->get();
             }
 
-            return  view('guest.single-gig', compact('gigs'));
+            return  view('guest.single-gig', compact('gig'));
 
         }else if (isset($min_budget)  && $min_budget!= 0 && isset($max_budget) && $max_budget!= 0) {
-            $gigs = WorkerGig::where('service_id',$service_id)->where('status', 1)->whereBetween('budget', [$min_budget, $max_budget])->get();
-            return  view('guest.single-gig', compact('gigs'));
+            $gig = $query->whereBetween('budget', [$min_budget, $max_budget])->get();
+            return  view('guest.single-gig', compact('gig'));
         }else if (isset($delivery_time) && $delivery_time != 0) {
-            $gigs = WorkerGig::where('service_id',$service_id)->where('status', 1)->where('day', '>=', $delivery_time)->orderByDesc('day')->get();
-            return  view('guest.single-gig', compact('gigs'));
+            $gig = WorkerGig::where('service_id',$service_id)->where('status', 'active')->where('day', '>=', $delivery_time)->orderByDesc('day')->get();
+            return  view('guest.single-gig', compact('gig'));
         }else if (isset($rating) && $rating != 0) {
-            $gigs = WorkerGig::where('service_id',$service_id)->where('status', 1)->where('day', '>=', $delivery_time)->orderByDesc('day')->get();
-            return  view('guest.single-gig', compact('gigs'));
+            $gig = $query->where('day', '>=', $delivery_time)->orderByDesc('day')->get();
+            return  view('guest.single-gig', compact('gig'));
         }else if (isset($timely_delivery_rate) && $timely_delivery_rate != 0) {
-            $gigs = WorkerGig::where('service_id',$service_id)->where('status', 1)->get();
-            return  view('guest.single-gig', compact('gigs'));
+            $gig = $query->get();
+            return  view('guest.single-gig', compact('gig'));
         }else if (isset($order_complete_rate) && $order_complete_rate != 0) {
-            $gigs = WorkerGig::where('service_id',$service_id)->where('status', 1)->get();
-            return  view('guest.single-gig', compact('gigs'));
+            $gig = $query->get();
+            return  view('guest.single-gig', compact('gig'));
         }else if (isset($now_online) && $now_online != 0) {
-            $gigs = WorkerGig::where('service_id',$service_id)->where('status', 1)->get();
-            return  view('guest.single-gig', compact('gigs'));
+            $gig = $query->get();
+            return  view('guest.single-gig', compact('gig'));
         }else if (isset($recent_online) && $recent_online != 0) {
             // echo "working";
-            $gigs = WorkerGig::where('service_id',$service_id)->where('status', 1)->get();
-            return  view('guest.single-gig', compact('gigs'));
+            $gig = $query->get();
+            return  view('guest.single-gig', compact('gig'));
         }else if (isset($recent_order_delivery) && $recent_order_delivery != 0) {
              // echo "working";
-            $gigs = WorkerGig::where('service_id',$service_id)->where('status', 1)->get();
-            return  view('guest.single-gig', compact('gigs'));
+            $gig = $query->get();
+            return  view('guest.single-gig', compact('gig'));
         }else{
-            $gigs = WorkerGig::where('service_id',$service_id)->where('status', 1)->get();
-            return  view('guest.single-gig', compact('gigs'));
+            $gig = $query->get();
+            return  view('guest.single-gig', compact('gig'));
         }
+    }
+
+    public function search(Request $request){
+
+        $gig=DB::table('worker_gig')->where('title','LIKE','%'.$request->search_text."%")->orWhere('description','LIKE','%'.$request->search_text."%")->orWhere('tags','LIKE','%'.$request->search_text."%")->where('status', 1)->get();
+
+        $pages=DB::table('worker_pages')->where('title','LIKE','%'.$request->search_text."%")->orWhere('name','LIKE','%'.$request->search_text."%")->orWhere('description','LIKE','%'.$request->search_text."%")->where('status', 1)->get();
+
+        $PageService = PageService::where('status', 1)->where('title','LIKE','%'.$request->search_text."%")->orWhere('description','LIKE','%'.$request->search_text."%")->orWhere('tags','LIKE','%'.$request->search_text."%")->get();
+        foreach ($PageService as $row) {
+            $page_info = WorkerPage::where('worker_services', 'like', '%'.$row->id.'%')->first();
+            $row->page = $page_info->id;
+        }
+
+        // var_dump($PageService);
+        // exit();
+        return view('guest.search',compact('gig','pages','PageService'));
     }
 }

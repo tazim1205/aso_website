@@ -11,8 +11,13 @@
     <link rel="icon" href="{{ asset(get_static_option('fav') ?? 'uploads/images/defaults/fav.png') }}" type="image/x-icon">
     <!--Bootstrap css-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Swiper CSS -->
+    <link href="{{ asset('assets/mobile/vendor/swiper/css/swiper.min.css') }}" rel="stylesheet">
     <!--main css-->
     <link rel="stylesheet" href="{{ asset('frontend/css/custom.css') }}">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.1/photoswipe.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.1/default-skin/default-skin.min.css" rel="stylesheet">
 </head>
 <body>
 
@@ -66,21 +71,21 @@
             </div>
             <div class="login-form loc-form">
                 <form action="{{ route('get.started') }}" method="get">
-                    <select name="district_id" id="district_id" placeholder="Feni | ফেনী">
-                        <option value="Dhaka">Select জেলা</option>
+                    <select name="district_id" id="district_id" placeholder="">
+                        <option value="">Select জেলা</option>
                         @foreach(App\District::get() as $row)
                             <option value="{{ $row->id }}" >{{ __($row->name) }}</option>
                         @endforeach
                     </select>
-                    <select name="upazila_thana_id" id="upazila_thana_id" placeholder="Feni Sadar | ফেনী সদর">
-                        <option value="Dhaka">Select মেট্রোপলিটন থানা / উপজেলা</option>
+                    <select name="upazila_thana_id" id="upazila_thana_id" placeholder="">
+                        <option value="">Select মেট্রোপলিটন থানা / উপজেলা</option>
                     </select>
-                    <select name="pouroshava_union_id" id="pouroshava_union_id" placeholder="Feni Pouroshova">
-                        <option value="Dhaka">Select এরিয়া /পৌরসভা /ইউনিয়ন</option>
+                    <select name="pouroshava_union_id" id="pouroshava_union_id" placeholder="">
+                        <option value="">Select এরিয়া /পৌরসভা /ইউনিয়ন</option>
                     </select>
 
-                    <select name="word_road_id" id="word_road_id placeholder="Select Word/Road">
-                        <option value="Dhaka">Select রোড / ওয়ার্ড</option>
+                    <select name="word_road_id" id="word_road_id" placeholder="">
+                        <option value="">Select রোড / ওয়ার্ড</option>
                     </select>
                     <input type="submit" value="Save Change">
                 </form>
@@ -92,6 +97,13 @@
 <script src="https://kit.fontawesome.com/45a0bcfe23.js" crossorigin="anonymous"></script>
 <script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- swiper js -->
+<script src="{{ asset('assets/mobile/vendor/swiper/js/swiper.min.js') }}"></script>
+<script src="https://old.aso.com.bd/assets/mobile/js/main.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.1/photoswipe.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.1/photoswipe-ui-default.min.js"></script>
 
 <script src="{{ asset('frontend/js/custom.js') }}"></script>
 <script type="text/javascript">

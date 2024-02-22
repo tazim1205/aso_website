@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Intervention\Image\ImageManagerStatic as Image;
 
+use Brian2694\Toastr\Facades\Toastr;
 
 class AdminAdsController extends Controller
 {
@@ -146,19 +147,23 @@ class AdminAdsController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function destroy(Request $request, $id)
+    public function destroy(string $id)
     {
-        if ($request->ajax()){
+        $delete = AdminAds::find($id)->delete();
 
-            $ads = AdminAds::findOrFail($id);
+        return redirect()->back()->with('success', 'Ads deleted successfully');
+    }
 
-            if ($ads){
+    public function restore($id){
+        AdminAds::where('id',$id)->withTrashed()->restore();
 
-                $ads->delete();
+        return redirect()->back()->with('success', 'Ads Restore successfully');
+    }
 
-                return response()->json(array('success' => true));
-            }
+    public function deletedListIndex($id)
+    {
+        AdminAds::where('id',$id)->withTrashed()->forceDelete();
 
-        }
+        return redirect()->back()->with('success', 'Ads Permanently deleted');
     }
 }

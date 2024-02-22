@@ -1,6 +1,7 @@
 @extends('guest.layout')
 @push('title') {{ __('Home') }} @endpush
 
+
 @section('content')
     <div class="wrapper-area">
         <div class="catagory-location">
@@ -10,51 +11,50 @@
         </div>
         <a href="{{ route('jobpost') }}"><div class="catagory-post"> <div><p>প্রয়োজন অনুযায়ী সার্ভিস বা কাজের পোষ্ট করুন...</p></div><div><i class="fa-solid fa-pen-to-square"></i></div></div></a>
 
-
-        <!-- carousel-->
-        @php
-
-        use App\AdminAds;
-        use App\ControllerAds;
-
-        $ads = AdminAds::get();
-
-        $controllerads = ControllerAds::where('controller_id',12)->active()->get();
-
-        @endphp
         
         <!-- admin ads area -->
           
-        <div id="slider" class="carousel slide" data-bs-ride="carousel" data-bs-touch="true">
-      
-            <div class="carousel-inner">
-                @if($ads)
-                @foreach($ads as $a)
-                <div class="carousel-item active">
-                    <img class="d-block w-100" src="{{asset($a->image)}}" alt="First slide">
-                </div>
+        <div id="adminAds" class="container carousel slide" data-ride="carousel">
+            <ol class="carousel-indicators">
+                @php
+                    $AdminadsCount = 1;
+                @endphp
+                @foreach($adminAds as $adminAd)
+                    <li data-target="#adminAds" style="width: 10px;height: 10px;border-radius: 50%;margin-right: 9px;margin-left: 3px;" data-slide-to="{{$AdminadsCount}}" class="@if($AdminadsCount == 1) active @endif"></li>
+                    @php
+                        $AdminadsCount++;
+                    @endphp
                 @endforeach
-                @endif
+            </ol>
+            <div class="carousel-inner swiper-wrapper">
+                @php
+                    $AdminaddImage = 1;
+                @endphp
+                @foreach($adminAds as $adminads)
+                        <div class="swiper-slide carousel-item @if($AdminaddImage == 1) active @endif">
+                            <div class="card">
+                                <div class="card-body p-1">
+                                    <a  @if($adminads->url) href="{{ $adminads->url }}" target="_blank" @endif >
+                                        <img src="{{ asset($adminads->image) }}" height="180px" width="100%" style="border-radius: 5px;">
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        @php
+                            $AdminaddImage++;
+                        @endphp
+                @endforeach
+                <a class="carousel-control-prev" href="#adminAds" role="button" data-slide="prev">
+                    <span class="" aria-hidden="true"></span>
+                    <span class="sr-only">Previous</span>
+                </a>
+                <a class="carousel-control-next" href="#adminAds" role="button" data-slide="next">
+                    <span class="" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                </a>
             </div>
-            <button class="carousel-control-prev" type="button" data-bs-target="#slider" data-bs-slide="prev">
-              <span class="carousel-control-prev-icon"></span>
-       
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#slider" data-bs-slide="next">
-                <span class="carousel-control-next-icon"></span>
-         
-            </button>
-    
-            <div class="carousel-indicators">
-                <button type="button" data-bs-target="#slide" data-bs-slide-to="0" class="active"></button>
-                <button type="button" data-bs-target="#slide" data-bs-slide-to="1"></button>
-                <button type="button" data-bs-target="#slide" data-bs-slide-to="2"></button>
-              
-            </div>
-            
         </div>
-
-        <!-- admin ads area end-->
+        <!-- End middle ads. by admin for all-->
 
 
     </div>
@@ -67,9 +67,9 @@
             @foreach($categories as $category)
                 <div class="catagory-child">
                     <div class="catagory-image">
-                        <a href="{{ route('showServices',\Illuminate\Support\Facades\Crypt::encryptString($category->id)) }}"><img src="{{ asset('/uploads/images/worker/service-category/'.$category->icon) }}" height="70px" width="70px" style=""></a>
+                        <a href="{{ route('showService',\Illuminate\Support\Facades\Crypt::encryptString($category->id)) }}"><img src="{{ asset('/uploads/images/worker/service-category/'.$category->icon) }}" height="70px" width="70px" style=""></a>
                     </div>
-                    <h4><a href="{{ route('showServices',\Illuminate\Support\Facades\Crypt::encryptString($category->id)) }}">{{ $category->name }}</a></h4>
+                    <h4><a href="{{ route('showService',\Illuminate\Support\Facades\Crypt::encryptString($category->id)) }}">{{ $category->name }}</a></h4>
                 </div>
             @endforeach
         </div>
@@ -80,37 +80,50 @@
 
     <!-- admin ads area -->
 
-    <div class="wrapper-area">
-        
-        <div id="demo" class="carousel slide" data-bs-ride="carousel">
-            <!-- Indicators/dots -->
-            <div class="carousel-indicators">
-                <button type="button" data-bs-target="#demo" data-bs-slide-to="0" class="active"></button>
-                <button type="button" data-bs-target="#demo" data-bs-slide-to="1"></button>
-                <button type="button" data-bs-target="#demo" data-bs-slide-to="2"></button>
-            </div>
-            <!-- The slideshow/carousel -->
-            <div class="carousel-inner">
-
-                @if($controllerads)
-                @foreach($controllerads as $c)
-                <div class="carousel-item active">
-                    <img class="d-block" src="{{asset($c->image)}}" style="width:100%">
-                </div>
+        <div id="carouselExampleIndicators" class="container carousel slide" data-ride="carousel">
+            <ol class="carousel-indicators">
+                @php
+                    $adsCount = 1;
+                @endphp
+                @foreach(App\User::where('role','controller')->where('upazila_id',Cookie::get('guest_upazila'))->get() as $controller)
+                    @foreach($controller->controllerAds as $controllerAds)
+                        <li data-target="#carouselExampleIndicators" style="width: 10px;height: 10px;border-radius: 50%;margin-right: 9px;margin-left: 3px;" data-slide-to="{{$adsCount}}" class="@if($adsCount == 1) active @endif"></li>
+                        @php
+                            $adsCount++;
+                        @endphp
+                    @endforeach
                 @endforeach
-                @endif
+            </ol>
+            <div class="carousel-inner swiper-wrapper ">
+                @php
+                    $addImage = 1;
+                @endphp
+                @foreach(App\User::where('role','controller')->where('upazila_id',Cookie::get('guest_upazila'))->get() as $controller)
+                    @foreach($controller->controllerAds as $controllerAds)
+                        <div class="swiper-slide carousel-item  @if($addImage == 1) active @endif">
+                            <div class="card">
+                                <div class="card-body p-1">
+                                    <a  @if($controllerAds->url) href="{{ $controllerAds->url }}" target="_blank" @endif >
+                                        <img src="{{ asset($controllerAds->image) }}" height="180px" width="100%" style="border-radius: 5px;">
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        @php
+                            $addImage++;
+                        @endphp
+                    @endforeach
+                @endforeach
+                <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                    <span class="" aria-hidden="true"></span>
+                    <span class="sr-only">Previous</span>
+                  </a>
+                  <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                    <span class="" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                  </a>
             </div>
-            <!-- Left and right controls/icons -->
-            <button class="carousel-control-prev" type="button" data-bs-target="#demo" data-bs-slide="prev">
-                <span class="carousel-control-prev-icon"></span>
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#demo" data-bs-slide="next">
-                <span class="carousel-control-next-icon"></span>
-            </button>
         </div>
-        
-    </div>
-    <!-- admin ads area end-->
 
     <div class="all-bid"><a href="#">স্পেশাল সার্ভিস
         </a></div>
@@ -126,7 +139,7 @@
                             <img src="{{ asset($specialService->image ?? get_static_option('no_image')) }}" style="border-radius: 15px;">
                         </div>
                         <h4>
-                            <a href="{{ route('customer.showSpecialProfiles',$specialService->id) }}">{{ $specialService->name }}</a>
+                            <a href="{{ route('showSpecialProfiles',$specialService->id) }}">{{ $specialService->name }}</a>
                         </h4>
                     </div>
 
@@ -201,7 +214,7 @@
 
                 $.ajax({
                     method: 'POST',
-                    url: "{{ route('customer.storeCustomerGig') }}",
+                    url: "{{ route('storeGuestGig') }}",
                     headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
                     data: formData,
                     processData: false,

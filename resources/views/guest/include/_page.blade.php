@@ -59,7 +59,7 @@
                                                 @endif
                                             @endforeach
                                             @if ($check == true)
-                                                    <a href="{{ route('customer.showPages', $page->id) }}">
+                                                    <a href="{{ route('guest.showPages', $page->id) }}">
                                                         <div class="card">
                                                             <img class="card-img-top" src="{{ asset($page->image)}}" alt="Card image cap">
                                                             <div class="card-body">
@@ -83,7 +83,7 @@
                                                                     </div>
                                                                 </div>
                                                                 <div class="gig-cont">
-                                                                    <a href="{{ route('customer.showPages', $page->id) }}"><h5>{{ Str::of($page->title)->limit(80, '(...)') }}</h5></a>
+                                                                    <a href="{{ route('guest.showPages', $page->id) }}"><h5>{{ Str::of($page->title)->limit(80, '(...)') }}</h5></a>
                                                                 </div>
                                                             </div>
                                                         </div>

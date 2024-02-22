@@ -15,7 +15,7 @@
                     </li>
                     <li class="dropdown d-none d-md-block mr-1">
                         <a class="dropdown-toggle nav-link" id="apps-navbar-links" href="#" data-toggle="dropdown" style="margin-top: 3px;">
-                            Laksham - Cumilla Laksham - Cumilla Laksham - Cumilla
+                            
                         </a>
                     </li>
                     <li class="nav-item dropdown navbar-search">
