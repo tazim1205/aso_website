@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Guest;
 
 use App\Http\Controllers\Controller;
 
+use App\ControllerNotice;
 use App\WorkerService;
 use App\WorkerServiceCategory;
 use App\Gig;
@@ -81,6 +82,9 @@ class WelcomeController extends Controller
         $word = Word::all();
         $categories = WorkerServiceCategory::all();
 
+        $controllerNotices = ControllerNotice::where('controller_id',$request->upazila_thana_id)->orderBy('id', 'desc')
+            ->get();
+
         $adminNotice = AdminNotice::orderBy('id', 'desc')
             ->take(1)
             ->get();
@@ -98,7 +102,7 @@ class WelcomeController extends Controller
         ];
 
         Session::put('location', $data);
-        return view('guest.get-started',compact('categories','district','upazila','puroshova','word','adminNotice', 'adminAds','specialServices'));
+        return view('guest.get-started',compact('categories','district','upazila','puroshova','word','adminNotice', 'adminAds','specialServices','controllerNotices'));
     }
 
     public function jobpost(){
