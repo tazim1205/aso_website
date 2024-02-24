@@ -16,8 +16,6 @@
     <link href="{{ asset('assets/mobile/vendor/swiper/css/swiper.min.css') }}" rel="stylesheet">
     <!--main css-->
     <link rel="stylesheet" href="{{ asset('frontend/css/custom.css') }}">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.1/photoswipe.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.1/default-skin/default-skin.min.css" rel="stylesheet">
 </head>
 <body>
 
@@ -87,7 +85,7 @@
                     <select name="word_road_id" id="word_road_id" placeholder="">
                         <option value="">Select রোড / ওয়ার্ড</option>
                     </select>
-                    <input type="submit" value="Save Change">
+                    <input type="submit" value="Save Location">
                 </form>
             </div>
         </div>
@@ -95,15 +93,14 @@
 </div>
 
 <script src="https://kit.fontawesome.com/45a0bcfe23.js" crossorigin="anonymous"></script>
-<script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
-<!-- swiper js -->
-<script src="{{ asset('assets/mobile/vendor/swiper/js/swiper.min.js') }}"></script>
-<script src="https://old.aso.com.bd/assets/mobile/js/main.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.1/photoswipe.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.1/photoswipe-ui-default.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<!-- swiper js -->
+<script src="https://old.aso.com.bd/assets/mobile/js/main.js"></script>
 
 <script src="{{ asset('frontend/js/custom.js') }}"></script>
 <script type="text/javascript">

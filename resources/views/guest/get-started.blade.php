@@ -1,7 +1,6 @@
 @extends('guest.layout')
 @push('title') {{ __('Home') }} @endpush
 
-
 @section('content')
     <div class="wrapper-area">
         <div class="catagory-location">
@@ -14,47 +13,43 @@
         
         <!-- admin ads area -->
           
-        <div id="adminAds" class="container carousel slide" data-ride="carousel">
-            <ol class="carousel-indicators">
-                @php
-                    $AdminadsCount = 1;
-                @endphp
-                @foreach($adminAds as $adminAd)
-                    <li data-target="#adminAds" style="width: 10px;height: 10px;border-radius: 50%;margin-right: 9px;margin-left: 3px;" data-slide-to="{{$AdminadsCount}}" class="@if($AdminadsCount == 1) active @endif"></li>
-                    @php
-                        $AdminadsCount++;
-                    @endphp
-                @endforeach
-            </ol>
-            <div class="carousel-inner swiper-wrapper">
-                @php
-                    $AdminaddImage = 1;
-                @endphp
-                @foreach($adminAds as $adminads)
-                        <div class="swiper-slide carousel-item @if($AdminaddImage == 1) active @endif">
-                            <div class="card">
-                                <div class="card-body p-1">
-                                    <a  @if($adminads->url) href="{{ $adminads->url }}" target="_blank" @endif >
-                                        <img src="{{ asset($adminads->image) }}" height="180px" width="100%" style="border-radius: 5px;">
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                        @php
-                            $AdminaddImage++;
-                        @endphp
-                @endforeach
-                <a class="carousel-control-prev" href="#adminAds" role="button" data-slide="prev">
-                    <span class="" aria-hidden="true"></span>
-                    <span class="sr-only">Previous</span>
-                </a>
-                <a class="carousel-control-next" href="#adminAds" role="button" data-slide="next">
-                    <span class="" aria-hidden="true"></span>
-                    <span class="sr-only">Next</span>
-                </a>
-            </div>
-        </div>
+        
         <!-- End middle ads. by admin for all-->
+
+        <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+        <ol class="carousel-indicators">
+            @php
+            $AdminadsCount = 1;
+            @endphp
+            @foreach($adminAds as $adminAd)
+            <li data-target="#adminAds" data-slide-to="{{$AdminadsCount}}" class="@if($AdminadsCount == 1) active @endif"></li>
+            @php
+                $AdminadsCount++;
+            @endphp
+            @endforeach
+        </ol>
+        <div class="carousel-inner">
+            @php
+                $AdminaddImage = 1;
+            @endphp
+            @foreach($adminAds as $adminads)
+            <div class="carousel-item @if($AdminaddImage == 1) active @endif">
+                <img src="{{ asset($adminads->image) }}" class="d-block w-100" alt="{{ asset($adminads->image) }}">
+            </div>
+            @php
+                $AdminaddImage++;
+            @endphp
+            @endforeach
+        </div>
+        <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+        </a>
+        <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+        </a>
+        </div>
 
 
     </div>
@@ -155,6 +150,23 @@
             <div class="catagory-details">
                 <h3>{{ $adminNotice->title }}</h3>
                 <p>{!! $adminNotice->detail !!}</p>
+            </div>
+        @endforeach
+        
+        <!-- @foreach(App\User::where('role','controller')->where('upazila_id',Cookie::get('guest_upazila'))->get() as $controller)
+            @foreach($controller->controllerNotice as $controllerNotice)
+            <div class="catagory-details">
+                <h3>{{ $controllerNotice->title }}</h3>
+                <p>{!! $controllerNotice->detail !!}</p>
+            </div>
+        @endforeach
+        @endforeach -->
+    </div>
+    <div class="wrapper-area">
+        @foreach($controllerNotices as $controllerNotice)
+            <div class="catagory-details">
+                <h3>{{ $controllerNotice->title }}</h3>
+                <p>{!! $controllerNotice->detail !!}</p>
             </div>
         @endforeach
     </div>
