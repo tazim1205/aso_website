@@ -78,8 +78,6 @@
                     <input type="submit" value="Submit">
                 </div>
             </form>
-
-
         </div>
     </div>
     <div class="write-pass-1 my-container">

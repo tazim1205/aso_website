@@ -13,8 +13,15 @@
         <div class="login-form help-line edit">
             <form action="{{ route('updateUsersSelfProfileInfo') }}" method="POST" enctype="multipart/form-data">
                 @csrf
-                <div class="edit-image" style="margin-bottom: 10px">
-                    <img id="profile-image-preview" alt="" src="{{ asset(auth()->user()->image ?? get_static_option('no_image')) }}">
+                <div class="form-group">
+                    <!--Image upload with preview start -->
+                    <div class="figure-profile shadow my-4">
+                        <figure><img id="profile-image-preview" style="width:15%;margin-left: 40%;border-radius: 50%;" alt="" src="{{ asset(auth()->user()->image ?? get_static_option('no_image')) }}"></figure>
+                        <div class="floating-btn">
+                            <input style="padding: 10px;" accept="image/*" type="file" name="profile_image" id="profile-image" class="float-file"/>
+                        </div>
+                    </div>
+                    <!--Image upload with preview end -->
                 </div>
                 <input type="text" required name="full_name" id="" placeholder="Name" value="{{ auth()->user()->full_name }}">
                 <input type="text" required name="user_name" id="" placeholder="Username" value="{{ auth()->user()->user_name }}">

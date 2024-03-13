@@ -2588,6 +2588,7 @@ border: 1px solid #ADADAD;
 }
 .card-img-top{
   border-radius: 5px;
+  height: 170px;
 }
 .card-body{
   margin: 0;
@@ -2792,8 +2793,18 @@ border: 1px solid #ADADAD;
   display: flex;
   justify-content: start;
 }
-.blog-img{ width: 20%;}
-.blog-cont{width:80%;}
+.blog-img { 
+  width: 20%;
+}
+
+.blog-cont{
+  width:80%;
+}
+.blog-cont a{
+  text-decoration: none !important;
+  color: #000;
+  text-transform: capitalize;
+}
 
 @media(max-width:576px){
   .blog-1{
@@ -3106,7 +3117,7 @@ details > summary{
 .free-h{
   border: none;
   box-shadow: none;
-  padding: 0;
+  /* padding: 0; */
 }
 .free-border{
   border-bottom: 1px solid var(--border-color);
@@ -3608,7 +3619,7 @@ details > summary{
 .bdr{
   border: 1px solid #000;
   border-radius: 5px;
-  padding: 15px;
+  padding: 15px !important;
   margin:20px auto !important;
 
 }
@@ -3910,50 +3921,12 @@ details > summary{
   display: none;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /** start worker panel **/
 /** page 1 **/
 .my-container{
   width: 60%;
   margin: auto;
+  padding: 1px;
 }
 
 @media(max-width:976px){
@@ -4640,11 +4613,25 @@ color: #3b3f3b;
 .catagory{
   justify-content: flex-start;
   text-align: center;
-
+  border: 1px solid;
 }
 .catagory-child{
-  width: 25%;
+  width: 23%;
+  padding: 10px 2px 4px 0px;
+  margin-left: 14px;
+  box-shadow: 0.5px 0.5px 4px 1px #cdccdd;
+}
 
+.catagory-child a {
+  text-decoration: none !important;
+  color: #000;
+  text-transform: capitalize;
+}
+
+.catagory-child h4 a {
+  text-decoration: none;
+  color: #000;
+  text-transform: capitalize;
 }
 
 /* The Modal (background) */

@@ -98,8 +98,23 @@ class UpazilaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(string $id)
     {
-        //
+        $delete = Upazila::find($id)->delete();
+
+        return redirect()->back()->with('success');
+    }
+
+    public function restore($id){
+        Upazila::where('id',$id)->withTrashed()->restore();
+
+        return redirect()->back()->with('success');
+    }
+
+    public function deletedListIndex($id)
+    {
+        Upazila::where('id',$id)->withTrashed()->forceDelete();
+
+        return redirect()->back()->with('success');
     }
 }

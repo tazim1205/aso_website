@@ -55,6 +55,7 @@ class UserController extends Controller
         $user->phone = $request->phone;
         $user->gender = $request->gender;
         $user->role = $request->role;
+        $user->status = $request->status;
         $user->upazila_id = $request->upazila_id;
         $user->district_id = $request->district_id;
 
@@ -178,8 +179,22 @@ class UserController extends Controller
     public function administrativeIndexAjax(){
         $data =User::where('role', 'admin')->get();
         return DataTables::of($data)
+            ->addcolumn('status',function($data){
+                if($data->status == '1')
+                {
+                    $status = 'Active';
+                    $class = 'btn btn-sm btn-success';
+                }
+                else
+                {
+                    $status = 'Inactive';
+                    $class = 'btn btn-sm btn-danger';
+                }
+                return '<div class="btn-group">
+                <a href="'.route('admin.users.status',$data->id).'" class="'.$class.'">'.$status.'</a></div>';
+            })
             ->addColumn('Actions', function($data) {
-                return '<a
+                return '<div class="btn-group"><a
                 href="#"
                 type="button"
                 class="btn btn-success btn-sm editbtn"
@@ -194,9 +209,14 @@ class UserController extends Controller
                 data-upazila = "'.$data->upazila_id.'"
                 data-toggle="modal"
                 data-target="#exampleModal"
-                ><i class="fa fa-edit"></i> </a>';
+                ><i class="fa fa-edit"></i> </a>
+                <form action="'.route('admin.users.destroy',$data->id ).'" method="post">
+                '.@csrf_field().'
+                <button onclick="return Sure()" type="submit" class="btn btn-danger">'.__('<i class="fa fa-trash"></i>').'</button>
+                </form>
+                </div>';
             })
-            ->rawColumns(['Actions'])
+            ->rawColumns(['Actions','status'])
             ->make(true);
     }
     public function controllerIndexAjax(){
@@ -209,8 +229,23 @@ class UserController extends Controller
             ->editColumn('district_id', function ($data) {
                 return $data->district->name ?? '';
             })
+            ->editColumn('status',function($data){
+                if($data->status == '1')
+                {
+                    $status = 'Active';
+                    $class = 'btn btn-sm btn-success';
+                }
+                else
+                {
+                    $status = 'Inactive';
+                    $class = 'btn btn-sm btn-danger';
+                }
+                return '<div class="btn-group">
+                <a href="'.route('admin.users.status',$data->id).'" class="'.$class.'">'.$status.'</a></div>';
+            })
             ->addColumn('Actions', function($data) {
-                return '<a
+                return '<div class="btn-group">
+                <a
                 href="#"
                 type="button"
                 class="btn btn-success btn-sm editbtn"
@@ -225,10 +260,15 @@ class UserController extends Controller
                 data-upazila = "'.$data->upazila_id.'"
                 data-toggle="modal"
                 data-target="#exampleModal"
-                ><i class="fa fa-edit"></i> </a>';
+                ><i class="fa fa-edit"></i> </a>
+                <form action="'.route('admin.users.destroy',$data->id ).'" method="post">
+                '.@csrf_field().'
+                <button onclick="return Sure()" type="submit" class="btn btn-danger">'.__('<i class="fa fa-trash"></i>').'</button>
+                </form>
+                </div>';
 
             })
-            ->rawColumns(['Actions'])
+            ->rawColumns(['Actions','status'])
             ->make(true);
     }
     public function workerIndexAjax(){
@@ -269,5 +309,41 @@ class UserController extends Controller
             })
             ->rawColumns(['Actions'])
             ->make(true);
+    }
+    
+    public function destroy(string $id)
+    {
+        $delete = User::find($id)->delete();
+
+        return redirect()->back()->with('success');
+    }
+
+    public function restore($id){
+        User::where('id',$id)->withTrashed()->restore();
+
+        return redirect()->back()->with('success');
+    }
+
+    public function deletedListIndex($id)
+    {
+        User::where('id',$id)->withTrashed()->forceDelete();
+
+        return redirect()->back()->with('success');
+    }
+
+    public function status($id)
+    {
+        $check = User::find($id);
+
+       if($check->status == 1)
+       {
+            User::find($id)->update(['status'=>0]);
+       }
+       else
+       {
+            User::find($id)->update(['status'=>1]);
+       }
+
+       return redirect()->back()->with('success');
     }
 }

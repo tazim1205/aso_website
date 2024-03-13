@@ -19,24 +19,82 @@
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-body">
-                            <h5 class="card-title">{{ __('Area controller Table') }}</h5>
-                            <div class="table-responsive">
-                                <table  class="table" id="datatable">
-                                    <thead class="thead-success shadow-success">
-                                    <tr>
-                                        <th scope="col">{{ __('Name') }}</th>
-                                        <th scope="col">{{ __('Upazilla') }}</th>
-                                        <th scope="col">{{ __('District') }}</th>
-                                        <th scope="col">{{ __('Phone') }}</th>
-                                        <th scope="col">{{ __('Email') }}</th>
-                                        <th scope="col">{{ __('Username') }}</th>
-                                        <th scope="col">{{ __('Action') }}</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    {{--  impoterd by ajax datatable--}}
-                                    </tbody>
-                                </table>
+                            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link active" id="active-tab" data-toggle="tab" href="#active" role="tab" aria-controls="active" aria-selected="true">
+                                        Active Controller List
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="deleted-data" data-toggle="tab" href="#deleted" role="tab" aria-controls="inactive" aria-selected="false">
+                                        Deleted Data
+                                    </a>
+                                </li>
+                            </ul>
+                            <div class="tab-content" id="myTabContent">
+                                <div class="tab-pane fade show active" id="active" role="tabpanel" aria-labelledby="active-tab">
+                                    <div class="row">
+                                        <div class="table-responsive">
+                                            <table  class="table" id="datatable">
+                                                <thead class="thead-success shadow-success">
+                                                <tr>
+                                                    <th scope="col">{{ __('Name') }}</th>
+                                                    <th scope="col">{{ __('Upazilla') }}</th>
+                                                    <th scope="col">{{ __('District') }}</th>
+                                                    <th scope="col">{{ __('Phone') }}</th>
+                                                    <th scope="col">{{ __('Email') }}</th>
+                                                    <th scope="col">{{ __('Username') }}</th>
+                                                    <th scope="col">{{ __('Status') }}</th>
+                                                    <th scope="col">{{ __('Action') }}</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                {{--  impoterd by ajax datatable--}}
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade" id="deleted" role="tabpanel" aria-labelledby="deleted-data">
+                                @php
+                                use App\User;
+                                $deleted=  User::where('role','controller')->onlyTrashed()->get();
+                                @endphp
+                                <div class="row">
+                                    <div class="table-responsive">
+                                        <table  class="table" id="datatable">
+                                            <thead class="thead-success shadow-success">
+                                                <tr>
+                                                    <th scope="col">{{ __('Name') }}</th>
+                                                    <th scope="col">{{ __('Upazilla') }}</th>
+                                                    <th scope="col">{{ __('District') }}</th>
+                                                    <th scope="col">{{ __('Phone') }}</th>
+                                                    <th scope="col">{{ __('Email') }}</th>
+                                                    <th scope="col">{{ __('Username') }}</th>
+                                                    <th scope="col">{{ __('Action') }}</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @if($deleted)
+                                                @foreach ($deleted as $v)
+                                                <tr>
+                                                    <td>{{$v->full_name}}</td>
+                                                    <td>{{$v->upazila_id}}</td>
+                                                    <td>{{$v->district_id}}</td>
+                                                    <td>{{$v->phone}}</td>
+                                                    <td>{{$v->email}}</td>
+                                                    <td>{{$v->user_name}}</td>
+                                                    <td>
+                                                    <a href="{{ route('admin.users.users_information_restore', $v->id) }}" class="btn btn-sm btn-info">Restore</a>
+                                                    <a href="{{ route('admin.users.users_information_delete', $v->id) }}" onclick="return Sure()" class="btn btn-sm btn-danger">Permenantly Delete</a>
+                                                    </td>
+                                                </tr>
+                                                @endforeach
+                                                @endif
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -132,6 +190,7 @@
                     {data: 'phone', name: 'phone'},
                     {data: 'email', name: 'email'},
                     {data: 'user_name', name: 'user_name'},
+                    {data: 'status', name: 'status'},
                     {data: 'Actions', name: 'Actions',orderable:false,serachable:false,sClass:'text-center'},
                 ]
             });
@@ -205,5 +264,18 @@
                 $("#upazila-id").val(upazila_id);
             })
         });
+    </script>
+    <script>
+        function Sure()
+        {
+            if(confirm("Are Your Sure To Delete?"))
+            {
+                return ture;
+            }
+            else
+            {
+                return false;
+            }
+        }
     </script>
 @endpush

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Guest;
 use App\Http\Controllers\Controller;
 
 use App\ControllerNotice;
+use App\ControllerAds;
 use App\WorkerService;
 use App\WorkerServiceCategory;
 use App\Gig;
@@ -82,13 +83,16 @@ class WelcomeController extends Controller
         $word = Word::all();
         $categories = WorkerServiceCategory::all();
 
-        $controllerNotices = ControllerNotice::where('controller_id',$request->upazila_thana_id)->orderBy('id', 'desc')
-            ->get();
-
         $adminNotice = AdminNotice::orderBy('id', 'desc')
             ->take(1)
             ->get();
         $adminAds = AdminAds::where('status', '1')
+            ->whereDate('starting', '<', Carbon::today()->addDays(1))
+            ->whereDate('ending', '>', Carbon::today()->addDays(-1))
+            ->get();
+            
+        $ControllerNotice =  ControllerNotice::join('users','users.id','controller_notices.controller_id')->where('users.role','controller')->where('upazila_id',$request->upazila_thana_id)->where('is_active',1)->orderBy('controller_id', 'desc')->get();
+        $controllerAds = ControllerAds::join('users','users.id','controller_ads.controller_id')->where('users.role','controller')->where('upazila_id',$request->upazila_thana_id)
             ->whereDate('starting', '<', Carbon::today()->addDays(1))
             ->whereDate('ending', '>', Carbon::today()->addDays(-1))
             ->get();
@@ -101,8 +105,12 @@ class WelcomeController extends Controller
             'word' => Word::find($request->word_road_id, ['name']),
         ];
 
+        $gig = WorkerGig::get();
+
+        // return $request->district_id;
+
         Session::put('location', $data);
-        return view('guest.get-started',compact('categories','district','upazila','puroshova','word','adminNotice', 'adminAds','specialServices','controllerNotices'));
+        return view('guest.get-started',compact('categories','district','upazila','puroshova','word','adminNotice', 'adminAds','specialServices','ControllerNotice','controllerAds','gig'));
     }
 
     public function jobpost(){
@@ -115,7 +123,10 @@ class WelcomeController extends Controller
         $upazila = Upazila::all();
         $puroshova = Puroshova::all();
         $word = Word::all();
-        return view('guest.area-change', compact('district','upazila','puroshova','word'));
+
+        $data = Distric::all();
+        // return 0;
+        return view('guest.layout', compact('district','upazila','puroshova','word','data'));
     }
 
     public function setAreaInCookie(Request $request){
