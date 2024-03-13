@@ -7,6 +7,27 @@
             <li class="order-btn l-item-4"><a class="cl-4" href="#">Canceled({{ count(auth()->user()->serviceBids->where('status', 'cancelled')) }})</a></li>
         </ul>
     </div>
+
+    <!-- admin ads -->
+    <div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner" style="width: 50%;margin-left: 25%;">
+            @foreach($adminAds as $chabi => $ads)
+            <div class="carousel-item @if(isset($chabi)) active @endif">
+                <img src="{{ asset($ads->image) }}" class="d-block w-100" alt="...">
+            </div>
+            @endforeach
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+    <!-- admin ads end -->
+
     <div class="order-area tab-1">
         <div class="order-comp">
             <div class="order-comp-btn order-btn">
@@ -30,7 +51,7 @@
             <div class="service-foot"><a href="{{ route('customer.showserviceBid', \Illuminate\Support\Facades\Crypt::encryptString($service->id)) }}">Veiw Details</a></div>
         </div>
         @endforeach
-        @include('customer.layout.include._carosole')
+        <!-- @include('customer.layout.include._carosole') -->
     </div>
 
     <div class="order-area tab-2">
@@ -58,7 +79,7 @@
             <div class="service-foot"><a href="{{ route('customer.showserviceBid', \Illuminate\Support\Facades\Crypt::encryptString($service->id)) }}">Veiw Details</a></div>
         </div>
         @endforeach
-        @include('customer.layout.include._carosole')
+        <!-- @include('customer.layout.include._carosole') -->
     </div>
     <div class="order-area tab-3">
         <div class="order-comp">
@@ -85,7 +106,7 @@
         </div>
         @endforeach
 
-        @include('customer.layout.include._carosole')
+        <!-- @include('customer.layout.include._carosole') -->
     </div>
     <div class="order-area tab-4">
 
@@ -113,6 +134,6 @@
             <div class="service-foot"><a href="{{ route('customer.showserviceBid', \Illuminate\Support\Facades\Crypt::encryptString($service->id)) }}">Veiw Details</a></div>
         </div>
         @endforeach
-        @include('customer.layout.include._carosole')
+        <!-- @include('customer.layout.include._carosole') -->
     </div>
 </div>

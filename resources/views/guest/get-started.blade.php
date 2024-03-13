@@ -12,52 +12,31 @@
 
         
         <!-- admin ads area -->
-          
-        
-        <!-- End middle ads. by admin for all-->
 
-        <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
-        <ol class="carousel-indicators">
-            @php
-            $AdminadsCount = 1;
-            @endphp
-            @foreach($adminAds as $adminAd)
-            <li data-target="#adminAds" data-slide-to="{{$AdminadsCount}}" class="@if($AdminadsCount == 1) active @endif"></li>
-            @php
-                $AdminadsCount++;
-            @endphp
-            @endforeach
-        </ol>
-        <div class="carousel-inner">
-            @php
-                $AdminaddImage = 1;
-            @endphp
-            @foreach($adminAds as $adminads)
-            <div class="carousel-item @if($AdminaddImage == 1) active @endif">
-                <img src="{{ asset($adminads->image) }}" class="d-block w-100" alt="{{ asset($adminads->image) }}">
+        <div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner">
+                @foreach($adminAds as $chabi => $ads)
+                <div class="carousel-item @if(isset($chabi)) active @endif">
+                    <img src="{{ asset($ads->image) }}" class="d-block w-100" alt="...">
+                </div>
+                @endforeach
             </div>
-            @php
-                $AdminaddImage++;
-            @endphp
-            @endforeach
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
         </div>
-        <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="sr-only">Previous</span>
-        </a>
-        <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="sr-only">Next</span>
-        </a>
-        </div>
-
 
     </div>
+
     <div class="all-bid"><a href="#">সার্ভিসসমূহ</a></div>
 
     <div class="wrapper-area">
-        <div class="catagory-h3"><h3></h3> </div>
-
+        <div class="catagory-h3"><h3></h3></div>
         <div class="catagory">
             @foreach($categories as $category)
                 <div class="catagory-child">
@@ -68,57 +47,31 @@
                 </div>
             @endforeach
         </div>
-
-
     </div>
 
 
-    <!-- admin ads area -->
+    <!-- controller ads area -->
 
-        <div id="carouselExampleIndicators" class="container carousel slide" data-ride="carousel">
-            <ol class="carousel-indicators">
-                @php
-                    $adsCount = 1;
-                @endphp
-                @foreach(App\User::where('role','controller')->where('upazila_id',Cookie::get('guest_upazila'))->get() as $controller)
-                    @foreach($controller->controllerAds as $controllerAds)
-                        <li data-target="#carouselExampleIndicators" style="width: 10px;height: 10px;border-radius: 50%;margin-right: 9px;margin-left: 3px;" data-slide-to="{{$adsCount}}" class="@if($adsCount == 1) active @endif"></li>
-                        @php
-                            $adsCount++;
-                        @endphp
-                    @endforeach
-                @endforeach
-            </ol>
-            <div class="carousel-inner swiper-wrapper ">
-                @php
-                    $addImage = 1;
-                @endphp
-                @foreach(App\User::where('role','controller')->where('upazila_id',Cookie::get('guest_upazila'))->get() as $controller)
-                    @foreach($controller->controllerAds as $controllerAds)
-                        <div class="swiper-slide carousel-item  @if($addImage == 1) active @endif">
-                            <div class="card">
-                                <div class="card-body p-1">
-                                    <a  @if($controllerAds->url) href="{{ $controllerAds->url }}" target="_blank" @endif >
-                                        <img src="{{ asset($controllerAds->image) }}" height="180px" width="100%" style="border-radius: 5px;">
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                        @php
-                            $addImage++;
-                        @endphp
-                    @endforeach
-                @endforeach
-                <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-                    <span class="" aria-hidden="true"></span>
-                    <span class="sr-only">Previous</span>
-                  </a>
-                  <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-                    <span class="" aria-hidden="true"></span>
-                    <span class="sr-only">Next</span>
-                  </a>
+    <div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+            @foreach($controllerAds as $key => $controllerAdss)
+            <div class="carousel-item @if(isset($key)) active @endif">
+                
+                <a  @if($controllerAdss->url) href="{{ $controllerAdss->url }}" target="_blank" @endif >
+                <img src="{{ asset($controllerAdss->image) }}" class="d-block w-100" alt="...">
+                </a>
             </div>
+            @endforeach
         </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
 
     <div class="all-bid"><a href="#">স্পেশাল সার্ভিস
         </a></div>
@@ -145,6 +98,10 @@
         </div>
     </div>
 
+    <div class="col-sm-12 col-12">
+        <h1 class="text-center">Admin Notice</h1>
+    </div>
+
     <div class="wrapper-area">
         @foreach($adminNotice as $adminNotice)
             <div class="catagory-details">
@@ -152,21 +109,17 @@
                 <p>{!! $adminNotice->detail !!}</p>
             </div>
         @endforeach
-        
-        <!-- @foreach(App\User::where('role','controller')->where('upazila_id',Cookie::get('guest_upazila'))->get() as $controller)
-            @foreach($controller->controllerNotice as $controllerNotice)
-            <div class="catagory-details">
-                <h3>{{ $controllerNotice->title }}</h3>
-                <p>{!! $controllerNotice->detail !!}</p>
-            </div>
-        @endforeach
-        @endforeach -->
     </div>
+
+    <div class="col-sm-12 col-12">
+        <h1 class="text-center">Controller Notice</h1>
+    </div>
+
     <div class="wrapper-area">
-        @foreach($controllerNotices as $controllerNotice)
+        @foreach($ControllerNotice as $controllerNotices)
             <div class="catagory-details">
-                <h3>{{ $controllerNotice->title }}</h3>
-                <p>{!! $controllerNotice->detail !!}</p>
+                <h3>{{ $controllerNotices->title }}</h3>
+                <p>{!! $controllerNotices->detail !!}</p>
             </div>
         @endforeach
     </div>

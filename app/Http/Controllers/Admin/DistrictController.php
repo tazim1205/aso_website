@@ -90,8 +90,23 @@ class DistrictController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(string $id)
     {
-        //
+        $delete = District::find($id)->delete();
+
+        return redirect()->back()->with('success');
+    }
+
+    public function restore($id){
+        District::where('id',$id)->withTrashed()->restore();
+
+        return redirect()->back()->with('success');
+    }
+
+    public function deletedListIndex($id)
+    {
+        District::where('id',$id)->withTrashed()->forceDelete();
+
+        return redirect()->back()->with('success');
     }
 }

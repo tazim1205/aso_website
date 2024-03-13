@@ -122,6 +122,15 @@ Route::group(['namespace' => 'Admin', 'as' => 'admin.', 'prefix' => 'admin', 'mi
     Route::resource('district', 'DistrictController')->except(['create', 'show', 'edit', 'destroy']);
     Route::resource('upazila', 'UpazilaController')->except(['create', 'show', 'edit', 'destroy']);
 
+    Route::post('admin/district/destroy/{id}', 'DistrictController@destroy')->name('district.destroy');
+    Route::get('admin/district/district_delete/{id}', 'DistrictController@deletedListIndex')->name('district.district_delete');
+    Route::get('admin/district/district_restore/{id}', 'DistrictController@restore')->name('district.district_restore');
+// District End
+    Route::post('admin/upazila/destroy/{id}', 'UpazilaController@destroy')->name('upazila.destroy');
+    Route::get('admin/upazila/upazila_delete/{id}', 'UpazilaController@deletedListIndex')->name('upazila.upazila_delete');
+    Route::get('admin/upazila/upazila_restore/{id}', 'UpazilaController@restore')->name('upazila.upazila_restore');
+// Upazila End
+
     Route::get('users/create', 'UserController@userCreate')->name('users.create');
     Route::get('profile', 'ProfileController@index')->name('profile.index');
     Route::post('users/store', 'UserController@userStore')->name('users.store');
@@ -129,6 +138,15 @@ Route::group(['namespace' => 'Admin', 'as' => 'admin.', 'prefix' => 'admin', 'mi
     Route::get('administrative/profile/{id}', 'UserController@administrativeProfile')->name('administrative.profile');
     Route::post('users/profile-update', 'UserController@userProfileUpdate')->name('users.profile.update');
     Route::post('special/profile-update', 'UserController@specialProfileUpdate')->name('special.profile.update');
+    Route::post('users/destroy/{id}', 'UserController@destroy')->name('users.destroy');
+    
+    Route::get('admin/users/users_information_status/{id}', 'UserController@status')->name('users.status');
+    Route::get('admin/users/users_information_delete/{id}', 'UserController@deletedListIndex')->name('users.users_information_delete');
+    Route::get('admin/users/users_information_restore/{id}', 'UserController@restore')->name('users.users_information_restore');
+    
+    // Route::get('game_setup_status/{id}',[GameSetupController::class,'status'])->name('game_setup.status');
+    // Route::get('/users/restore/{id}', 'UserController@restore')->name('users_information_restore');
+    // Route::get('/users/trash/{id}', 'UserController@deletedListIndex')->name('users_information_delete');
 
     Route::get('controller/profile/{id}', 'UserController@controllerProfile')->name('controller.profile');
     Route::get('controller/index', 'UserController@controllerIndex')->name('controller.index');
@@ -781,9 +799,9 @@ Route::post('/get/replay', 'Customer\WorkerGigController@questionReplay')->name(
 
 
 // ajax get worker area
-// Route::get('get/district/upazila/{id}','Worker\ServiceAreaController@GetUpozila');
-// Route::get('get/upazila/pouroshava-union/{id}','Worker\ServiceAreaController@GetPouroshavaUnion');
-// Route::get('get/pouroshava-union/word-road/{id}','Worker\ServiceAreaController@GetWordRoad');
+Route::get('get/district/upazila/{id}','Worker\ServiceAreaController@GetUpozila');
+Route::get('get/upazila/pouroshava-union/{id}','Worker\ServiceAreaController@GetPouroshavaUnion');
+Route::get('get/pouroshava-union/word-road/{id}','Worker\ServiceAreaController@GetWordRoad');
 
 //get worker poroshova and word and show in a div
 Route::get('get/pouroshava/word/{id}', 'Worker\ServiceAreaController@GetPouroshavaWord');

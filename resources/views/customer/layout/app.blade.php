@@ -45,67 +45,68 @@
 
 
 <div class="my-location">
-
     <div class="login-area loc-area lc-1">
         <i class="fa-solid fa-xmark colo-2"></i>
         <div class="login-content">
-
             <div class="login-img">
-
-                <img src="{{ asset('image/3196533 1.png') }}" alt="Log in Image">
+                <img src="{{ asset('assets/images/location.png') }}" style="width:20%" alt="Log in Image">
             </div>
-
             <div class="login-info loc-head">
                 <h2>আপনার লোকেশন নির্বাচন করুন</h2>
             </div>
             <div class="login-form loc-form">
-                <form>
-
-                    <select name="District" placeholder="Feni | ফেনী">
-                        <option value="Dhaka">Select জেলা</option>
-                        <option value="Dhaka">Dhaka</option>
-                        <option value="Dhaka">Dhaka</option>
-                        <option value="Dhaka">Dhaka</option>
-                        <option value="Dhaka">Dhaka</option>
-                        <option value="Dhaka">Dhaka</option>
-                    </select>
-
-
-                    <select name="Upzilla" placeholder="Feni Sadar | ফেনী সদর">
-                        <option value="Dhaka">Select মেট্রোপলিটন থানা / উপজেলা</option>
-                        <option value="Dhaka">Dhaka</option>
-                        <option value="Dhaka">Dhaka</option>
-                        <option value="Dhaka">Dhaka</option>
-                        <option value="Dhaka">Dhaka</option>
-                        <option value="Dhaka">Dhaka</option>
-                    </select>
-
-
-
-                    <select name="Pouroshoba" placeholder="Feni Pouroshova">
-                        <option value="Dhaka">Select এরিয়া /পৌরসভা /ইউনিয়ন</option>
-                        <option value="Dhaka">Dhaka</option>
-                        <option value="Dhaka">Dhaka</option>
-                        <option value="Dhaka">Dhaka</option>
-                        <option value="Dhaka">Dhaka</option>
-                        <option value="Dhaka">Dhaka</option>
-                    </select>
-
-                    <select name="Pouroshoba" placeholder="Select Word/Road">
-                        <option value="Dhaka">Select রোড / ওয়ার্ড</option>
-                        <option value="Dhaka">Dhaka</option>
-                        <option value="Dhaka">Dhaka</option>
-                        <option value="Dhaka">Dhaka</option>
-                        <option value="Dhaka">Dhaka</option>
-                        <option value="Dhaka">Dhaka</option>
-                    </select>
-                    <input type="text" placeholder="আপনার Google Map লিংক">
-                    <input type="submit" value="Save Change">
-                </form>
-
-
-
-
+                <div class="row">
+                    <div class="col-12 px-0 text-center">
+                        <form action="{{ route('customer.changeArea') }}" method="POST" class="row">
+                            @csrf
+                            <div class="col-lg-12 form-group mt-3">
+                                <select class="form-control" name="district_id" id="district_id" required="">
+                                    <option value="">{{ __('সিলেক্ট জেলা ') }}</option>
+                                    @foreach(App\District::get() as $row)
+                                    <option value="{{ $row->id }}" <?php if ($row->id == auth()->user()->district_id) {
+                                        echo "selected";
+                                    } ?> >{{ __($row->name) }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="col-lg-12 form-group mt-3">
+                                <select class="form-control" name="upazila_thana_id" id="upazila_thana_id" required="">
+                                    <option value="">{{ __('সিলেক্ট উপজেলা /মেট্রোপলিটন থানা a') }}</option>
+                                    @foreach(App\Upazila::where('district_id', auth()->user()->district_id)->get() as $row)
+                                    <option value="{{ $row->id }}" <?php if ($row->id == auth()->user()->upazila_id) {
+                                        echo "selected";
+                                    } ?> >{{ __($row->name) }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="col-lg-12 form-group mt-3">
+                                <select class="form-control" name="pouroshava_union_id" id="pouroshava_union_id" required="">
+                                    <option value="">{{ __('Select Pouroshava / Union') }}</option>
+                                    @foreach(App\Puroshova::where('upazila_id', auth()->user()->upazila_id)->get() as $row)
+                                    <option value="{{ $row->id }}" <?php if ($row->id == auth()->user()->pouroshova_union_id) {
+                                        echo "selected";
+                                    } ?> >{{ __($row->name) }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="col-lg-12 form-group mt-3">
+                                <select class="form-control" name="word_road_id" id="word_road_id" required="">
+                                    <option value="">{{ __('Select Ward / Road') }}</option>
+                                    @foreach(App\Word::where('puroshova_id', auth()->user()->pouroshova_union_id)->get() as $row)
+                                    <option value="{{ $row->id }}" <?php if ($row->id == auth()->user()->word_road_id) {
+                                        echo "selected";
+                                    } ?> >{{ __($row->name) }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="col-lg-12">
+                                <input name="location" placeholder="আপনার Google Map লিংক" type="text" value="{{ auth()->user()->location }}" >
+                                <!-- <textarea name="location" placeholder="আপনার Google Map লিংক" id="" class="form-control form-control-lg" rows="2">{{ auth()->user()->location }}</textarea> -->
+                                <input type="submit" value="Save Change">
+                            </div>
+                        </form>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -137,6 +138,79 @@
                 icon: 'error',
             })
         @endif
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            
+            $('select[name="district_id"]').on('change', function(){
+                var district_id = $(this).val();
+                if(district_id) {
+                    $.ajax({
+                        url: "{{  url('/get/district/upazila/') }}/"+district_id,
+                        type:"GET",
+                        dataType:"json",
+                        success:function(data) {
+                            var d =$('select[name="upazila_thana_id"]').empty();
+                            $('select[name="upazila_thana_id"]').append('<option value="">সিলেক্ট উপজেলা /মেট্রোপলিটন থানা</option>');
+                            $.each(data, function(key, value){
+                               $('select[name="upazila_thana_id"]').append('<option value="'+ value.id +'">' + value.name + '</option>');
+                            });
+                            $('select[name="pouroshava_union_id"]').empty();
+                            $('select[name="word_road_id"]').empty();
+
+                            $('select[name="pouroshava_union_id"]').append('<option value="">Select Pouroshava / Union</option>');
+                            $('select[name="word_road_id"]').append('<option value="">Select Ward / Road</option>');
+                        },
+                        
+                    });
+                } else {
+                    alert('danger');
+                }
+            });
+
+            $('select[name="upazila_thana_id"]').on('change', function(){
+                var upazila_thana_id = $(this).val();
+                if(upazila_thana_id) {
+                    $.ajax({
+                        url: "{{  url('/get/upazila/pouroshava-union/') }}/"+upazila_thana_id,
+                        type:"GET",
+                        dataType:"json",
+                        success:function(data) {
+                            var d =$('select[name="pouroshava_union_id"]').empty();
+                            $('select[name="pouroshava_union_id"]').append('<option value="">Select Pouroshava / Union</option>');
+                            $.each(data, function(key, value){
+                               $('select[name="pouroshava_union_id"]').append('<option value="'+ value.id +'">' + value.name + '</option>');
+                            });
+                        },
+                        
+                    });
+                } else {
+                    alert('danger');
+                }
+            });
+
+            $('select[name="pouroshava_union_id"]').on('change', function(){
+                var pouroshava_union_id = $(this).val();
+                if(pouroshava_union_id) {
+                    $.ajax({
+                        url: "{{  url('/get/pouroshava-union/word-road/') }}/"+pouroshava_union_id,
+                        type:"GET",
+                        dataType:"json",
+                        success:function(data) {
+                            var d =$('select[name="word_road_id"]').empty();
+                            $('select[name="word_road_id"]').append('<option value="">Select Ward / Road</option>');
+                            $.each(data, function(key, value){
+                               $('select[name="word_road_id"]').append('<option value="'+ value.id +'">' + value.name + '</option>');
+                            });
+                        },
+                        
+                    });
+                } else {
+                    alert('danger');
+                }
+            });
+        });
+
     </script>
     @stack('foot')
 </body>

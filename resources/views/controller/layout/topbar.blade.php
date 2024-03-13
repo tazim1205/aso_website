@@ -15,7 +15,7 @@
                     </li>
                     <li class="dropdown d-none d-md-block mr-1">
                         <a class="dropdown-toggle nav-link" id="apps-navbar-links" href="#" data-toggle="dropdown" style="margin-top: 3px;">
-                            
+                        {{ __('Users of') }} {{ auth()->user()->upazila->name }}
                         </a>
                     </li>
                     <li class="nav-item dropdown navbar-search">

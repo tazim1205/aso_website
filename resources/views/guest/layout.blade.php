@@ -33,7 +33,7 @@
                 <li><a href="{{ route('customer.home.index') }}">Dashboard</a></li>
             @endguest
 
-            <li><a href="javascript:void(0);" class="location"><i class="fa fa-map-marker" aria-hidden="true"></i></a></li>
+            <li><a href="javascript:void(0);" id="openModalBtn"><i class="fa fa-map-marker" aria-hidden="true"></i></a></li>
         </ul>
     </div>
 
@@ -91,6 +91,59 @@
         </div>
     </div>
 </div>
+
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span id="closeModalBtn" class="close">&times;</span>
+            <!-- login buttons -->
+            <div class="login-content">
+                <!-- <div class="login-img">
+                    <img src="{{ asset('frontend/image/3196533 1.png') }}" alt="Log in Image">
+                </div> -->
+
+                <div class="login-info loc-head">
+                    <h2>আপনার লোকেশন নির্বাচন করুন</h2>
+                </div>
+                <div class="login-form loc-form">
+                    <form action="{{ route('store.area') }}" method="post">
+                        <select class="form-control" name="district_id">
+                            @if(isset($district))
+                            @foreach($district as $d)
+                            <option value="{{ $d->id }}" <?php if ($d->id == $d->district_id) {
+								echo "selected";} ?>>{{ __($d->name) }}</option>
+                            @endforeach
+                            @endif
+                        </select>
+                        <select class="form-control" name="upazila_thana_id">
+                            @if(isset($upazila))
+                            @foreach($upazila as $u)
+                            <option value="{{ $u->id }}" <?php if ($u->id == $d->upazila_thana_id) {
+								echo "selected";} ?>>{{ __($u->name) }}</option>
+                            @endforeach
+                            @endif
+                        </select>
+                        <select class="form-control" name="pouroshava_union_id">
+                            @if(isset($puroshova))
+                            @foreach($puroshova as $p)
+                            <option value="{{ $p->id }}" <?php if ($p->id == $d->pouroshava_union_id) {
+								echo "selected";} ?>>{{ __($p->name) }}</option>
+                            @endforeach
+                            @endif
+                        </select>
+                        <select class="form-control" name="word_road_id">
+                            @if(isset($word))
+                            @foreach($word as $w)
+                            <option value="{{ $w->id }}" <?php if ($w->id == $d->word_road_id) {
+								echo "selected";} ?>>{{ __($w->name) }}</option>
+                            @endforeach
+                            @endif
+                        </select>
+                        <input type="submit" value="Save Location">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 
 <script src="https://kit.fontawesome.com/45a0bcfe23.js" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
@@ -174,6 +227,28 @@
             }
         });
     });
+
+</script>
+
+<script>
+    let openModalBtn = document.getElementById("openModalBtn");
+let modal = document.getElementById("myModal");
+let closeModalBtn = document.getElementById("closeModalBtn");
+
+openModalBtn.addEventListener("click", function() {
+    modal.style.display = "block";
+});
+
+closeModalBtn.addEventListener("click", function() {
+    modal.style.display = "none";
+});
+
+window.addEventListener("click", function(event) {
+    if (event.target === modal) {
+        modal.style.display = "none";
+        backdrop:'static';
+    }
+});
 
 </script>
 </body>

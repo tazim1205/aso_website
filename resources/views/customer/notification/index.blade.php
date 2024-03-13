@@ -35,6 +35,6 @@
                 </div>
             </div>
         @endforeach
-        @php $notification->markAsRead(); @endphp
+        
     </div>
 @endsection
