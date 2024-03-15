@@ -1,29 +1,19 @@
 <!doctype html>
-<html lang="{{  App::getLocale() }}" class="deeppurple-theme">
+<html lang="{{  App::getLocale() }}" >
 <!-- This system developed by DataTech BD ltd. Phone: 01304734623-25 | info@datatechbd.com | 23-08-2020-->
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, viewport-fit=cover, user-scalable=no">
-    <title>{{ __('Service Provider Sign up') }} | {{ get_static_option('name') }}</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ __('Service Provider Sign Up') }} | {{ get_static_option('name') }}</title>
     <meta name="author" content="{{ get_static_option('author_name') ?? 'No author' }}">
     <meta name="description" content="{{ get_static_option('author_description') ?? 'No description' }}"/>
     <meta property="og:image" content="{{ asset(get_static_option('meta_image')) }}" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <!-- Material design icons CSS -->
-    <link rel="stylesheet" href="{{ asset('assets/mobile/vendor/materializeicon/material-icons.css')}}">
-
-    <!-- Roboto fonts CSS -->
-    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&amp;display=swap" rel="stylesheet">
-
     <!-- Bootstrap core CSS -->
-    <link href="{{ asset('assets/mobile/vendor/bootstrap-4.4.1/css/bootstrap.min.css') }}" rel="stylesheet">
-
-    <!-- Swiper CSS -->
-    <link href="{{ asset('assets/mobile/vendor/swiper/css/swiper.min.css') }}" rel="stylesheet">
-
-    <!-- Custom styles for this template -->
-    <link href="{{ asset('assets/mobile/css/style.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ asset('frontend/toast/jquery.toast.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('frontend/css/custom.css') }}">
 
     <!--SweetAlert 2-->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
@@ -32,291 +22,270 @@
 
 </head>
 
-<body>
-<!-- Loader -->
-@include('includes.loader')
-<!-- Loader ends -->
-
-<div class="wrapper">
-    <!-- header -->
-    <div class="header">
-        <div class="row no-gutters">
-            <div class="col-auto">
-                <a href="{{ route('welcome') }}" class="btn  btn-link text-dark"><i class="material-icons">chevron_left</i></a>
-            </div>
-            <div class="col text-center"></div>
-            <div class="col-auto">
-            </div>
-        </div>
-    </div>
-    <!-- header ends -->
 <style>
 
 
-#regForm {
-  /*background-color: #ffffff;*/
-  margin: 100px auto;
-  font-family: Raleway;
-  /*padding: 40px;*/
-  /*width: 70%;*/
-  /*min-width: 300px;*/
+.login-form{
+    text-align: center;
+}
+.login-form button {
+    display: block;
+    margin: 0 auto 15px;
+    width: 328px;
+    height: 48px;
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    padding: 0 15px;
+    background: transparent;
+}
+.login-form .btn-next {
+    background: var(--btn-bg-color);
+    color: var(--btn-color);
+    font-weight: 600;
+    cursor: pointer;
+}
+.login-form .btn-prev{
+    cursor: pointer;
+    color: var(--border-color);
+    text-align: center;
+    font-size: 12px;
+    font-weight: 600;
+}
+.pre-next .btn-prev:hover {
+    background: var(--btn-bg-color);
+    color: #fff;
+}
+.login-form p {
+    font-size: var(--text-size);
+    line-height: 14.52px;
+    margin-bottom: 7px;
+}
+.login-form h4 {
+    color: red;
+    font-size: 12px;
+    margin-bottom: 15px;
+}
+.pre-next {
+    display: flex;
+    justify-content: center;
+}
+.pre-next button {
+    height: 40px;
+    width: 150px;
+    margin: 5px;
+}
+.login-form h2 {
+    font-size: var(--h-size);
+    color: var(--text-color);
+    font-weight: 500;
+    margin-bottom: 10px;
+}
+.radio {
+    width: 140px;
+    height: 15px;
+    display: flex;
+    margin: 10px auto;
 }
 
-h1 {
-  text-align: center;  
+.login-form input {
+    width: 328px;
+    height: 45px;
+    padding: 10px 15px;
 }
 
-input {
-  padding: 10px;
-  width: 100%;
-  font-size: 17px;
-  font-family: Raleway;
-  border: 1px solid #aaaaaa;
-  /*border-radius: 10%;*/
+.radio input{
+    width: 14px !important;
+    height: 11px !important;
 }
 
-/* Mark input boxes that gets an error on validation: */
-input.invalid {
-  background-color: #ffdddd;
-}
-
-/* Hide all steps by default: */
-.tab {
-  display: none;
-}
-
-button {
-  background-color: #04AA6D;
-  color: #ffffff;
-  border: none;
-  padding: 10px 20px;
-  font-size: 17px;
-  font-family: Raleway;
-  cursor: pointer;
-}
-
-button:hover {
-  opacity: 0.8;
-}
-
-.prevBtn {
-  background-color: #bbbbbb;
-}
-
-/* Make circles that indicate the steps of the form: */
-.step {
-  height: 15px;
-  width: 15px;
-  margin: 0 2px;
-  background-color: #bbbbbb;
-  border: none;  
-  border-radius: 50%;
-  display: inline-block;
-  opacity: 0.5;
-}
-
-.step.active {
-  opacity: 1;
-}
-
-/* Mark the steps that are finished and valid: */
-.step.finish {
-  background-color: #04AA6D;
-}
 </style>
+
+<body style="padding: 1%;">
+
+<div class="login-area">
+
 
     <div class="row no-gutters login-row">
         <div class="col align-self-center px-3 text-center mt-4">
-            <br>
-            <br>
-            <a href="{{ route('welcome') }}"><img src="{{ asset( get_static_option('logo')  ?? 'uploads/images/defaults/logo.png') }}" alt="logo" class="logo-small"></a>
-
-            <h4 class="mt-3">{{ __('সার্ভিস প্রোভাইডার সাইন আপ ') }}</h4>
-            {{-- <a href="{{ route('language') }}">
-                <img height="30px;" width="30px;" src="{{ asset(  'uploads/images/defaults/language-icon-bd-en.png') }}" alt="logo" class="">
-                @if(current_language() != 'en')
-                    বাংলা
-                @else
-                    English
-                @endif
-            </a> --}}
+            <div class="login-img">
+                <img src="{{ asset('frontend/image/Mobile login-bro 1.png') }}" alt="Log in Image">
+            </div>
+            <div class="login-info">
+                <h2>সার্ভিস প্রোভাইডার সাইন আপ</h2>
+                <p>Verification করতে আপনার মোবাইল নাম্বার দিন</p>
+            </div>
             <form id="regForm" class="form-signin mt-3 p-2" method="post" enctype="multipart/form-data">
                 @csrf
-                <!-- One "tab" for each step in the form: -->
-                <div class="tab phone-tab d-block mb-2">
-                    <p class="mt-2"><b>{{ __('Verification করতে আপনার মোবাইল নাম্বার দিন') }}</b></p>
-                    <div class="form-group">
-                        <input type="number" id="phone" class="form-control form-control-lg text-center"  placeholder="{{ __('Mobile Number') }}" required>
-                        <span id="error_phone" class="text-danger"></span>
-                    </div>
-                    <button type="button" class="next" id="phonBtnNext" >Next</button>
-                </div>
-                <div class="tab otp-tab d-none mb-2">
-                    <p class="mt-2 mb-0"><b>{{ __('Check Your Mobile & Enter Your OTP') }}</b></p>
-                    <small class="text-danger" style="font-size: 11px;">If you don't get OTP then click on previous button & try again.</small>
-                    <div class="form-group ">
-                        <input type="number" id="otp" class="form-control form-control-lg text-center"  placeholder="{{ __('OTP') }}" required>
-                        <span id="error_otp" class="text-danger"></span>
-                    </div>
-                    <button type="button" class="prevBtn" id="otpBtnPrev">Previous</button>
-                    <button type="button" class="next" id="otpBtnNext">Next</button>
-                </div>
-                <div class="tab personal-tab d-none mb-2">
-                    <p class="mt-2"><b>{{ __('Personal Information') }}</b></p>
-                    <div class="form-group ">
-                        <input type="text" id="full-name" class="form-control form-control-lg text-center" placeholder="{{ __('Full Name') }}" required >
-                        <span id="error_fullname" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <input type="text" minlength="6" maxlength="6" id="referral" class="form-control form-control-lg text-center" placeholder="{{ __('Referral code') }}">
-                    </div>
-                    <div class="form-group">
-                        <small>{{ __('Select the District /Metropolitan Thana you want to take service.') }}</small>
-                        <select class="form-control form-control-lg" id="district-id">
-                            <option selected disabled> {{ __('Chose district') }}</option>
-                            @foreach($districts as $district)
-                                <option value="{{ $district->id }}">{{ __($district->name) }}</option>
-                            @endforeach
-                        </select>
-                        <span id="error_district" class="text-danger"></span>
-                    </div>
-                    <div class="form-group" id="upazila_group">
-                        <small>{{ __('Select the Upazila /Metropolitan Thana you want to take service.') }}</small>
-                        <select class="form-control form-control-lg" id="upazila-id">
-                            <option selected disabled value="" id="upazila-loader">
-                                <span class="badge badge-warning mb-1">{{ __('Loading ...') }}</span>
-                            </option>
-                            <!-- Insert by ajax -->
-                        </select>
-                        <span id="error_upazila" class="text-danger"></span>
-                    </div>
-                    <div class="form-group" id="pouroshova_group">
-                        <small>{{ __('Select the Pouroshova /Union you want to take service.') }}</small>
-                        <select class="form-control form-control-lg select2" multiple = "multiple" id="pouroshova-id">
-                            <option selected disabled value="" id="pouroshova-loader">
-                                <span class="badge badge-warning mb-1">{{ __('Loading ...') }}</span>
-                            </option>
-                            <!-- Insert by ajax -->
-                        </select>
-                        <span id="error_pouroshova" class="text-danger"></span>
-                    </div>
-                    {{-- <div class="form-group" id="word_group">
-                        <small>{{ __('Select the Word /Road you want to take service.') }}</small>
-                        <select class="form-control form-control-lg select2" multiple = "multiple" id="word-id">
-                            <option selected disabled value="" id="word-loader">
-                                <span class="badge badge-warning mb-1">{{ __('Loading ...') }}</span>
-                            </option>
-                            <!-- Insert by ajax -->
-                        </select>
-                        <span id="error_word" class="text-danger"></span>
-                    </div> --}}
-
-                    <!-- Start category -->
-                    <div class="form-group">
-                        
-                        
-                        <select name="worker_service" id="worker_service" multiple="multiple" class="form-control" style="width: 100%;">
-                            @foreach($categories as $category)
-                                <optgroup label="{{ $category->name }}">
-                                    @foreach($category->services as $service)
-                                        <option value="{{ $service->id }}">{{ $service->name }}</option>
-                                    @endforeach
-                                </optgroup>
-                            @endforeach
-                        </select>
-                        <span id="error_service" class="text-danger"></span>
-                    </div>
-                    <!-- End category -->
-
-                    <!-- Start services -->
-                    {{-- <div class="form-group">
-                        <select multiple="" class="form-control form-control-lg text-center" id="services-id">
-                            <option selected disabled value="" id="services-loader">
-                                <span class="badge badge-warning mb-1">Loading ...</span>
-                            </option>
-                            <!-- Insert by ajax -->
-                        </select>
-                    </div> --}}
-                    <!-- End services -->
-
-                    <!-- Start NID  -->
-                    <div class="form-group">
-                        <label>{{ __('NID front side') }}</label>
-                        <input type="file" id="nid-front" class="form-control form-control-lg">
-                        <span id="error_nid_front" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label>{{ __('NID back side') }}</label>
-                        <input type="file" id="nid-back" class="form-control form-control-lg">
-                        <span id="error_nid_back" class="text-danger"></span>
-                    </div>
-
-                    <div class="form-group">
-                        <label>{{ __('License Document') }}</label>
-                        <input type="file" id="license-documents" class="form-control form-control-lg">
-                    </div>
-
-                    <div class="form-group">
-                        <input type="text" minlength="" maxlength="" id="nid-number" class="form-control form-control-lg text-center" placeholder="{{ __('NID Number') }}">
-                        <span id="error_nid_number" class="text-danger"></span>
-                    </div>
-                    <!-- End NID  -->
-
-                    <div class="form-group row mx-0">
-                        <div class="col-6 col-md-6 col-lg-4">
-                            <div class="custom-control custom-radio">
-                                <input type="radio" name="gender" class="custom-control-input gender" id="male" value="male">
-                                <label class="custom-control-label" for="male">{{ __('Male') }}</label>
-                            </div>
+                <div class="login-form">
+                    <!-- One "tab" for each step in the form: -->
+                    <div class="tab phone-tab d-block mb-2">
+                        <div class="form-group">
+                            <input type="number" id="phone" name="number" placeholder="Mobile number">
+                            <span id="error_phone" class="text-danger"></span>
                         </div>
-                        <div class="col-6 col-md-6 col-lg-4">
-                            <div class="custom-control custom-radio">
-                                <input type="radio" name="gender" class="custom-control-input gender" id="female" value="female">
-                                <label class="custom-control-label" for="female">{{ __('Female') }}</label>
-                            </div>
+                        <input type="button" class="btn-next" id="phonBtnNext" value="Next">
+                        <!-- <button type="button" class="btn-next" id="phonBtnNext">Next</button> -->
+                    </div>
+                    <div class="tab otp-tab d-none mb-2">
+                        <p class="mt-2 mb-0"><b>{{ __('Check Your Mobile & Enter Your OTP') }}</b></p>
+                        <label class="text-danger" style="font-size: 11px;">If you don't get OTP then click on previous button & try again.</label>
+                        <div class="form-group ">
+                            <input type="number" id="otp" placeholder="{{ __('OTP') }}" required>
+                            <span id="error_otp" class="text-danger"></span>
+                        </div>
+                        <div class="pre-next">
+                            <button type="button" class="prevBtn btn-prev btn-n-1" id="otpBtnPrev">Previous</button>
+                            <button type="button" class="next btn-next" id="otpBtnNext">Next</button>
                         </div>
                     </div>
-                    <button type="button" class="prevBtn" id="personalInfoBtnPrev">Previous</button>
-                    <button type="button" class="next" id="personalInfoBtnNext">Next</button>
+                    <div class="tab personal-tab d-none mb-2">
+                        <p class="mt-2"><b>{{ __('Personal Information') }}</b></p>
+                        <div class="form-group ">
+                            <input type="text" id="full-name" placeholder="{{ __('Full Name') }}" required >
+                            <span id="error_fullname" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" minlength="6" maxlength="6" id="referral" placeholder="{{ __('Referral code') }}">
+                        </div>
+                        <div class="form-group">
+                            <label>{{ __('Select the District /Metropolitan Thana you want to take service.') }}</label>
+                            <select class="form-select" id="district-id">
+                                <option selected disabled> {{ __('Chose district') }}</option>
+                                @foreach($districts as $district)
+                                    <option value="{{ $district->id }}">{{ __($district->name) }}</option>
+                                @endforeach
+                            </select>
+                            <span id="error_district" class="text-danger"></span>
+                        </div>
+                        <div class="form-group" id="upazila_group">
+                            <label>{{ __('Select the Upazila /Metropolitan Thana you want to take service.') }}</label>
+                            <select class="form-select"  id="upazila-id">
+                                <option selected disabled value="" id="upazila-loader">
+                                    <span class="badge badge-warning mb-1">{{ __('Loading ...') }}</span>
+                                </option>
+                                <!-- Insert by ajax -->
+                            </select>
+                            <span id="error_upazila" class="text-danger"></span>
+                        </div>
+                        <div class="form-group" id="pouroshova_group">
+                            <label>{{ __('Select the Pouroshova /Union you want to take service.') }}</label>
+                            <select multiple = "multiple" id="pouroshova-id">
+                                <option selected disabled value="" id="pouroshova-loader">
+                                    <span class="badge badge-warning mb-1">{{ __('Loading ...') }}</span>
+                                </option>
+                                <!-- Insert by ajax -->
+                            </select>
+                            <span id="error_pouroshova" class="text-danger"></span>
+                        </div>
+                        {{-- <div class="form-group" id="word_group">
+                            <label>{{ __('Select the Word /Road you want to take service.') }}</label>
+                            <select multiple = "multiple" id="word-id">
+                                <option selected disabled value="" id="word-loader">
+                                    <span class="badge badge-warning mb-1">{{ __('Loading ...') }}</span>
+                                </option>
+                                <!-- Insert by ajax -->
+                            </select>
+                            <span id="error_word" class="text-danger"></span>
+                        </div> --}}
+
+                        <!-- Start category -->
+                        <div class="form-group">
+                            <label for="">{{ __('Select the Categories you want to take service.') }}</label>
+                            <select name="worker_service" id="worker_service" multiple="multiple">
+                                @foreach($categories as $category)
+                                    <optgroup label="{{ $category->name }}">
+                                        @foreach($category->services as $service)
+                                            <option value="{{ $service->id }}">{{ $service->name }}</option>
+                                        @endforeach
+                                    </optgroup>
+                                @endforeach
+                            </select>
+                            <span id="error_service" class="text-danger"></span>
+                        </div>
+                        <!-- End category -->
+
+                        <!-- Start services -->
+                        {{-- <div class="form-group">
+                            <select multiple="" id="services-id">
+                                <option selected disabled value="" id="services-loader">
+                                    <span class="badge badge-warning mb-1">Loading ...</span>
+                                </option>
+                                <!-- Insert by ajax -->
+                            </select>
+                        </div> --}}
+                        <!-- End services -->
+
+                        <!-- Start NID  -->
+                        <div class="form-group">
+                            <label>{{ __('NID front side') }}</label>
+                            <input type="file" id="nid-front">
+                            <span id="error_nid_front" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label>{{ __('NID back side') }}</label>
+                            <input type="file" id="nid-back">
+                            <span id="error_nid_back" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label>{{ __('License Document') }}</label>
+                            <input type="file" id="license-documents">
+                        </div>
+
+                        <div class="form-group">
+                            <input type="text" minlength="" maxlength="" id="nid-number" placeholder="{{ __('NID Number') }}">
+                            <span id="error_nid_number" class="text-danger"></span>
+                        </div>
+                        <!-- End NID  -->
+                        <div class="radio">
+                            <input type="radio" name="gender" class="custom-control-input gender" id="male" value="male">
+                            <label for="Male">Male</label>
+                            <input type="radio" name="gender" class="custom-control-input gender" id="female" value="female">
+                            <label for="Male">Female</label>
+                        </div>
+                        <div class="pre-next">
+                            <button type="button" class="prevBtn btn-prev btn-n-1" id="otpBtnPrev">Previous</button>
+                            <button type="button" class="next btn-next" id="otpBtnNext">Next</button>
+                        </div>
+                    </div>
+                    <div class="tab signup-tab d-none mb-2">
+                        <p class="mt-2"><b>{{ __('Sign Up Details') }}</b></p>
+                        <div class="form-group">
+                            <input type="text" id="user-name" placeholder="{{ __('Username') }}" required >
+                            <span id="error_username" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <input type="password" id="password" placeholder="{{ __('Password') }}" required>
+                            <span id="error_password" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <input type="password" id="confirm-password" placeholder="{{ __('Confirm Password') }}" required>
+                            <span id="error_confirmpassword" class="text-danger"></span>
+                        </div>
+                        <button type="button" class="prevBtn" id="sinupBtnPrev">Previous</button>
+                        <button type="button" class="next" id="register">Sign Up</button>
+                    </div>
+                    {{-- <div style="overflow:auto;">
+                        <div style="float:center;">
+                            <button type="button" id="prevBtn" onclick="nextPrev(-1)">Previous</button>
+                            <button type="button" class="next" id="nextBtn" onclick="nextPrev(1)">Next</button>
+                        </div>
+                    </div> --}}
+                    <!-- Circles which indicates the steps of the form: -->
                 </div>
-                <div class="tab signup-tab d-none mb-2">
-                    <p class="mt-2"><b>{{ __('Sign Up Details') }}</b></p>
-                    <div class="form-group">
-                        <input type="text" id="user-name" class="form-control form-control-lg text-center" placeholder="{{ __('Username') }}" required >
-                        <span id="error_username" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <input type="password" id="password" class="form-control form-control-lg text-center" placeholder="{{ __('Password') }}" required>
-                        <span id="error_password" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <input type="password" id="confirm-password" class="form-control form-control-lg text-center" placeholder="{{ __('Confirm Password') }}" required>
-                        <span id="error_confirmpassword" class="text-danger"></span>
-                    </div>
-                    <button type="button" class="prevBtn" id="sinupBtnPrev">Previous</button>
-                    <button type="button" class="next" id="register">Sign Up</button>
-                </div>
-                {{-- <div style="overflow:auto;">
-                    <div style="float:center;">
-                        <button type="button" id="prevBtn" onclick="nextPrev(-1)">Previous</button>
-                        <button type="button" class="next" id="nextBtn" onclick="nextPrev(1)">Next</button>
-                    </div>
-                </div> --}}
-                <!-- Circles which indicates the steps of the form: -->
                 
             </form>
-            <p class="mt-4 d-block text-secondary">
-                {{ __('সাইন আপ এ ক্লিক করে আপনি') }}
-                <a data-toggle="modal" data-target="#privacyPolicyModal">{{ __('Privacy-policy') }}</a> ,
-                <a data-toggle="modal" data-target="#termsConditionModal">{{ __('Terms and condition') }}</a>
-                {{ __('এ সম্মত হচ্ছেন।') }}
-            </p>
-            <hr>
-            <p class="mt-4 d-block text-secondary">
-                <a href="{{ route('register') }}">{{ __('কাস্টমার সাইন আপ') }}</a>&nbsp;|
-                <a href="{{ route('getWorkerRegisterForm') }}">{{ __('মার্কেটার সাইন আপ') }}</a>&nbsp;
-                
-            </p>
+            <div class="condition-area">
+                <p>সাইন আপ এ ক্লিক করে আপনি <a href="#" class="privacy-1"> Privacy-policy,
+                        Terms and condition  </a>  এ সম্মত হচ্ছেন।</p>
+            </div>
+            <div class="s-5-footer">
+                <p>
+                    <a href="{{ route('register') }}">{{ __('কাস্টমার সাইন আপ') }} | </a>
+                    <a href="{{ route('getMarketerRegisterForm') }}">{{ __('মার্কেটার সাইন আপ') }} |</a>
+                    <a href="{{ route('login') }}">{{ __('লগ ইন করুন') }}</a>
+                </p>
+            </div>
         </div>
     </div>
 
@@ -324,20 +293,12 @@ button:hover {
 </div>
 
 
-
+@include('auth.partials.privacy-policy')
 <!-- jquery, popper and bootstrap js -->
 <script src="{{ asset('assets/mobile/js/jquery-3.3.1.min.js') }}"></script>
 <script src="{{ asset('assets/mobile/js/popper.min.js') }}"></script>
 <script src="{{ asset('assets/mobile/vendor/bootstrap-4.4.1/js/bootstrap.min.js') }}"></script>
-
-<!-- swiper js -->
-<script src="{{ asset('assets/mobile/vendor/swiper/js/swiper.min.js') }}"></script>
-
-<!-- cookie js -->
-<script src="{{ asset('assets/mobile/vendor/cookie/jquery.cookie.js') }}"></script>
-
-<!-- template custom js -->
-<script src="{{ asset('assets/mobile/js/main.js') }}"></script>
+<script src="{{ asset('frontend/js/custom.js') }}"></script>
 
 {{-- select2 script link  --}}
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
@@ -368,49 +329,6 @@ button:hover {
         $("#word_group").hide()
 
         $("#services-id").hide()
-
-        //Get service after click on category
-        // $("#category-id").change(function(){
-        //     var categoryId = $(this).val();
-        //     $("#services-id").show() //now show district
-        //     $.ajax({
-        //         method: 'POST',
-        //         url: '/guest/get/services-of-a-category',
-        //         headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-        //         data: { categoryId: categoryId},
-        //         dataType: 'JSON',
-        //         beforeSend: function (){
-        //             $("#services-loader").show()
-        //         },
-        //         complete: function (){
-        //             $("#services-loader").hide()
-        //         },
-        //         success: function (response) {
-        //             //console.log(response)
-        //             var serviceOption='<option disabled> Chose service</option>';
-        //             response.forEach(function(service){
-        //                 serviceOption += '<option class="servicesClass" value='+service.id+'>'+service.name+'</option>';
-        //             })
-        //             $("#services-id").html(serviceOption)
-        //         },
-        //         error: function (xhr) {
-        //             var errorMessage = '<div class="card bg-danger">\n' +
-        //                 '                        <div class="card-body text-center p-5">\n' +
-        //                 '                            <span class="text-white">';
-        //             $.each(xhr.responseJSON.errors, function(key,value) {
-        //                 errorMessage +=(''+value+'<br>');
-        //             });
-        //             errorMessage +='</span>\n' +
-        //                 '                        </div>\n' +
-        //                 '                    </div>';
-        //             Swal.fire({
-        //                 icon: 'error',
-        //                 title: 'Oops...',
-        //                 footer: errorMessage
-        //             })
-        //         },
-        //     })
-        // });
 
         //Get upazila after click on district
         $("#district-id").change(function(){
@@ -487,18 +405,6 @@ button:hover {
                         allowClear: true,
                     });
 
-                    // var wordOption='';
-                    // response.forEach(function(word){
-                    //     word.word.forEach(function(w){
-                    //         wordOption += '<option value='+w.id+'>'+w.name+'</option>';
-                    //     });
-                    // })
-                    // $("#word-id").append(wordOption);
-
-                    // $("#word-id").select2({
-                    //     placeholder: "Search Road",
-                    //     allowClear: true,
-                    // });
                 },
                 error: function (xhr) {
                     var errorMessage = '<div class="card bg-danger">\n' +
@@ -518,53 +424,6 @@ button:hover {
                 },
             })
         });
-
-        // $("#pouroshova-id").change(function(){
-        //     var pouroshova = $(this).val();
-        //     $("#word_group").show() //now show district
-        //     $.ajax({
-        //         method: 'POST',
-        //         url: '/guest/get/word-of-a-pouroshava',
-        //         headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-        //         data: { pouroshova: pouroshova},
-        //         dataType: 'JSON',
-        //         beforeSend: function (){
-        //             $("#word-loader").show()
-        //         },
-        //         complete: function (){
-        //             $("#word-loader").hide()
-        //         },
-        //         success: function (response) {
-        //             //console.log(response)
-        //             var wordOption='';
-        //             response.forEach(function(word){
-        //                 wordOption += '<option value='+word.id+'>'+word.name+'</option>';
-        //             })
-        //             $("#word-id").append(wordOption);
-
-        //             $("#word-id").select2({
-        //                 placeholder: "Search Road",
-        //                 allowClear: true,
-        //             });
-        //         },
-        //         error: function (xhr) {
-        //             var errorMessage = '<div class="card bg-danger">\n' +
-        //                 '                        <div class="card-body text-center p-5">\n' +
-        //                 '                            <span class="text-white">';
-        //             $.each(xhr.responseJSON.errors, function(key,value) {
-        //                 errorMessage +=(''+value+'<br>');
-        //             });
-        //             errorMessage +='</span>\n' +
-        //                 '                        </div>\n' +
-        //                 '                    </div>';
-        //             Swal.fire({
-        //                 icon: 'error',
-        //                 title: 'Oops...',
-        //                 footer: errorMessage
-        //             })
-        //         },
-        //     })
-        // });
 
 
         $('#phonBtnNext').click(function(){
@@ -725,15 +584,6 @@ button:hover {
                 $("#personalInfoBtnNext").prop("disabled", false);
             }
 
-            // if($.trim($('#category-id').val()).length == 0){
-            //     error_category = 'Category is required';
-            //     $('#error_category').text(error_category);
-            //     $('#category-id').addClass('has-error');
-            // }else{
-            //     error_category = '';
-            //     $('#error_category').text(error_category);
-            //     $('#category-id').removeClass('has-error');
-            // }
             if($.trim($('#worker_service').val()).length == 0){
                 error_service = 'Service is required';
                 $('#error_service').text(error_service);
@@ -795,6 +645,7 @@ button:hover {
         });
          
         $('#sinupBtnPrev').click(function(){
+            alert();
             $('.personal-tab').removeClass('d-none');
             $('.personal-tab').addClass('d-block');
             $('.signup-tab').removeClass('d-block');
@@ -838,26 +689,15 @@ button:hover {
                 $('#confirm-password').addClass('has-error');
                 $("#register").prop("disabled", false);
             }else{
-                // if ($('#password').val() == $('#confirm-password').val()){
-                //     error_confirmpassword = 'Password not match';
-                //     $('#error_confirmpassword').text(error_confirmpassword);
-                //     $('#confirm-password').addClass('has-error');
-                // }else{
                     error_confirmpassword = '';
                     $('#error_confirmpassword').text(error_confirmpassword);
                     $('#confirm-password').removeClass('has-error');
-                // }
             }
           
             if(error_username != '' || error_password != '' || error_confirmpassword != ''){
                 return false;
                 $("#register").prop("disabled", false);
             }else{
-
-                // var servicesId = [];
-                // $('#services-id :selected').each(function(i, selectedElement) {
-                //     servicesId[i] = $(selectedElement).val();
-                // });
 
                //console.log(getInput());
                 var userName = $('#user-name').val();
