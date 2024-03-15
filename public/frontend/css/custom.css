@@ -227,12 +227,13 @@ select{
 .login-form select{
     display: block;
     margin: 0 auto 15px;
-    width: 328px;
-    height: 48px;
+    width: 328px !important;
+    height: 48px !important;
     border: 1px solid var(--border-color);
     border-radius: 5px;
-    padding: 0 15px;
+    padding: 0 15px !important;
     outline: none;
+    font-size: 13px;
 }
 
 .radio{

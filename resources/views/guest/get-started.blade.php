@@ -4,7 +4,7 @@
 @section('content')
     <div class="wrapper-area">
         <div class="catagory-location">
-            <p class="location"><i class="fa-solid fa-location-dot"></i> {{
+            <p id="location"><i class="fa-solid fa-location-dot"></i> {{
                     Session::get('location')['district']->name }} > {{ Session::get('location')['upazila']->name }} > {{
                     Session::get('location')['puroshova']->name }} > {{ Session::get('location')['word']->name }}</p>
         </div>

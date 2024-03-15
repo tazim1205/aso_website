@@ -92,7 +92,7 @@
     </div>
 </div>
 
-    <div id="myModal" class="modal">
+    {{--<div id="myModal" class="modal">
         <div class="modal-content">
             <span id="closeModalBtn" class="close">&times;</span>
             <!-- login buttons -->
@@ -143,7 +143,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
 
 <script src="https://kit.fontawesome.com/45a0bcfe23.js" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
