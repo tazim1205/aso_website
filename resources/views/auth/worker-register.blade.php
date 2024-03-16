@@ -141,15 +141,15 @@
                     <div class="tab personal-tab d-none mb-2">
                         <p class="mt-2"><b>{{ __('Personal Information') }}</b></p>
                         <div class="form-group ">
-                            <input type="text" id="full-name" placeholder="{{ __('Full Name') }}" required >
+                            <input type="text" id="full-name" class="form-control form-control-lg text-center" placeholder="{{ __('Full Name') }}" required >
                             <span id="error_fullname" class="text-danger"></span>
                         </div>
                         <div class="form-group">
-                            <input type="text" minlength="6" maxlength="6" id="referral" placeholder="{{ __('Referral code') }}">
+                            <input type="text" minlength="6" maxlength="6" id="referral" class="form-control form-control-lg text-center" placeholder="{{ __('Referral code') }}">
                         </div>
                         <div class="form-group">
-                            <label>{{ __('Select the District /Metropolitan Thana you want to take service.') }}</label>
-                            <select class="form-select" id="district-id">
+                            <small>{{ __('Select the District /Metropolitan Thana you want to take service.') }}</small>
+                            <select class="form-control form-control-lg" id="district-id">
                                 <option selected disabled> {{ __('Chose district') }}</option>
                                 @foreach($districts as $district)
                                     <option value="{{ $district->id }}">{{ __($district->name) }}</option>
@@ -158,8 +158,8 @@
                             <span id="error_district" class="text-danger"></span>
                         </div>
                         <div class="form-group" id="upazila_group">
-                            <label>{{ __('Select the Upazila /Metropolitan Thana you want to take service.') }}</label>
-                            <select class="form-select"  id="upazila-id">
+                            <small>{{ __('Select the Upazila /Metropolitan Thana you want to take service.') }}</small>
+                            <select class="form-control form-control-lg" id="upazila-id">
                                 <option selected disabled value="" id="upazila-loader">
                                     <span class="badge badge-warning mb-1">{{ __('Loading ...') }}</span>
                                 </option>
@@ -168,8 +168,8 @@
                             <span id="error_upazila" class="text-danger"></span>
                         </div>
                         <div class="form-group" id="pouroshova_group">
-                            <label>{{ __('Select the Pouroshova /Union you want to take service.') }}</label>
-                            <select multiple = "multiple" id="pouroshova-id">
+                            <small>{{ __('Select the Pouroshova /Union you want to take service.') }}</small>
+                            <select class="form-control form-control-lg select2" multiple = "multiple" id="pouroshova-id">
                                 <option selected disabled value="" id="pouroshova-loader">
                                     <span class="badge badge-warning mb-1">{{ __('Loading ...') }}</span>
                                 </option>
@@ -178,8 +178,8 @@
                             <span id="error_pouroshova" class="text-danger"></span>
                         </div>
                         {{-- <div class="form-group" id="word_group">
-                            <label>{{ __('Select the Word /Road you want to take service.') }}</label>
-                            <select multiple = "multiple" id="word-id">
+                            <small>{{ __('Select the Word /Road you want to take service.') }}</small>
+                            <select class="form-control form-control-lg select2" multiple = "multiple" id="word-id">
                                 <option selected disabled value="" id="word-loader">
                                     <span class="badge badge-warning mb-1">{{ __('Loading ...') }}</span>
                                 </option>
@@ -190,8 +190,9 @@
 
                         <!-- Start category -->
                         <div class="form-group">
-                            <label for="">{{ __('Select the Categories you want to take service.') }}</label>
-                            <select name="worker_service" id="worker_service" multiple="multiple">
+                            
+                            
+                            <select name="worker_service" id="worker_service" multiple="multiple" class="form-control" style="width: 100%;">
                                 @foreach($categories as $category)
                                     <optgroup label="{{ $category->name }}">
                                         @foreach($category->services as $service)
@@ -206,7 +207,7 @@
 
                         <!-- Start services -->
                         {{-- <div class="form-group">
-                            <select multiple="" id="services-id">
+                            <select multiple="" class="form-control form-control-lg text-center" id="services-id">
                                 <option selected disabled value="" id="services-loader">
                                     <span class="badge badge-warning mb-1">Loading ...</span>
                                 </option>
@@ -218,35 +219,42 @@
                         <!-- Start NID  -->
                         <div class="form-group">
                             <label>{{ __('NID front side') }}</label>
-                            <input type="file" id="nid-front">
+                            <input type="file" id="nid-front" class="form-control form-control-lg">
                             <span id="error_nid_front" class="text-danger"></span>
                         </div>
                         <div class="form-group">
                             <label>{{ __('NID back side') }}</label>
-                            <input type="file" id="nid-back">
+                            <input type="file" id="nid-back" class="form-control form-control-lg">
                             <span id="error_nid_back" class="text-danger"></span>
                         </div>
 
                         <div class="form-group">
                             <label>{{ __('License Document') }}</label>
-                            <input type="file" id="license-documents">
+                            <input type="file" id="license-documents" class="form-control form-control-lg">
                         </div>
 
                         <div class="form-group">
-                            <input type="text" minlength="" maxlength="" id="nid-number" placeholder="{{ __('NID Number') }}">
+                            <input type="text" minlength="" maxlength="" id="nid-number" class="form-control form-control-lg text-center" placeholder="{{ __('NID Number') }}">
                             <span id="error_nid_number" class="text-danger"></span>
                         </div>
                         <!-- End NID  -->
-                        <div class="radio">
-                            <input type="radio" name="gender" class="custom-control-input gender" id="male" value="male">
-                            <label for="Male">Male</label>
-                            <input type="radio" name="gender" class="custom-control-input gender" id="female" value="female">
-                            <label for="Male">Female</label>
+
+                        <div class="form-group row mx-0">
+                            <div class="col-6 col-md-6 col-lg-4">
+                                <div class="custom-control custom-radio">
+                                    <input type="radio" name="gender" class="custom-control-input gender" id="male" value="male">
+                                    <label class="custom-control-label" for="male">{{ __('Male') }}</label>
+                                </div>
+                            </div>
+                            <div class="col-6 col-md-6 col-lg-4">
+                                <div class="custom-control custom-radio">
+                                    <input type="radio" name="gender" class="custom-control-input gender" id="female" value="female">
+                                    <label class="custom-control-label" for="female">{{ __('Female') }}</label>
+                                </div>
+                            </div>
                         </div>
-                        <div class="pre-next">
-                            <button type="button" class="prevBtn btn-prev btn-n-1" id="otpBtnPrev">Previous</button>
-                            <button type="button" class="next btn-next" id="otpBtnNext">Next</button>
-                        </div>
+                        <button type="button" class="prevBtn" id="personalInfoBtnPrev">Previous</button>
+                        <button type="button" class="next" id="personalInfoBtnNext">Next</button>
                     </div>
                     <div class="tab signup-tab d-none mb-2">
                         <p class="mt-2"><b>{{ __('Sign Up Details') }}</b></p>
@@ -295,9 +303,9 @@
 
 @include('auth.partials.privacy-policy')
 <!-- jquery, popper and bootstrap js -->
-<script src="{{ asset('assets/mobile/js/jquery-3.3.1.min.js') }}"></script>
+<script src="https://code.jquery.com/jquery-3.7.1.js"></script>
 <script src="{{ asset('assets/mobile/js/popper.min.js') }}"></script>
-<script src="{{ asset('assets/mobile/vendor/bootstrap-4.4.1/js/bootstrap.min.js') }}"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 <script src="{{ asset('frontend/js/custom.js') }}"></script>
 
 {{-- select2 script link  --}}

@@ -369,49 +369,6 @@ button:hover {
 
         $("#services-id").hide()
 
-        //Get service after click on category
-        // $("#category-id").change(function(){
-        //     var categoryId = $(this).val();
-        //     $("#services-id").show() //now show district
-        //     $.ajax({
-        //         method: 'POST',
-        //         url: '/guest/get/services-of-a-category',
-        //         headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-        //         data: { categoryId: categoryId},
-        //         dataType: 'JSON',
-        //         beforeSend: function (){
-        //             $("#services-loader").show()
-        //         },
-        //         complete: function (){
-        //             $("#services-loader").hide()
-        //         },
-        //         success: function (response) {
-        //             //console.log(response)
-        //             var serviceOption='<option disabled> Chose service</option>';
-        //             response.forEach(function(service){
-        //                 serviceOption += '<option class="servicesClass" value='+service.id+'>'+service.name+'</option>';
-        //             })
-        //             $("#services-id").html(serviceOption)
-        //         },
-        //         error: function (xhr) {
-        //             var errorMessage = '<div class="card bg-danger">\n' +
-        //                 '                        <div class="card-body text-center p-5">\n' +
-        //                 '                            <span class="text-white">';
-        //             $.each(xhr.responseJSON.errors, function(key,value) {
-        //                 errorMessage +=(''+value+'<br>');
-        //             });
-        //             errorMessage +='</span>\n' +
-        //                 '                        </div>\n' +
-        //                 '                    </div>';
-        //             Swal.fire({
-        //                 icon: 'error',
-        //                 title: 'Oops...',
-        //                 footer: errorMessage
-        //             })
-        //         },
-        //     })
-        // });
-
         //Get upazila after click on district
         $("#district-id").change(function(){
             var districtId = $(this).val();
@@ -474,11 +431,6 @@ button:hover {
                     $("#word-loader").hide()
                 },
                 success: function (response) {
-                    //console.log(response)
-                    // var pouroshovaOption='';
-                    // response.forEach(function(pouroshova){
-                    //     pouroshovaOption += '<option value='+pouroshova.id+'>'+pouroshova.name+'</option>';
-                    // })
                     $("#pouroshova-id").empty();
                     $("#pouroshova-id").html(response);
 
@@ -486,19 +438,6 @@ button:hover {
                         placeholder: "Search Pouroshova",
                         allowClear: true,
                     });
-
-                    // var wordOption='';
-                    // response.forEach(function(word){
-                    //     word.word.forEach(function(w){
-                    //         wordOption += '<option value='+w.id+'>'+w.name+'</option>';
-                    //     });
-                    // })
-                    // $("#word-id").append(wordOption);
-
-                    // $("#word-id").select2({
-                    //     placeholder: "Search Road",
-                    //     allowClear: true,
-                    // });
                 },
                 error: function (xhr) {
                     var errorMessage = '<div class="card bg-danger">\n' +
@@ -518,53 +457,6 @@ button:hover {
                 },
             })
         });
-
-        // $("#pouroshova-id").change(function(){
-        //     var pouroshova = $(this).val();
-        //     $("#word_group").show() //now show district
-        //     $.ajax({
-        //         method: 'POST',
-        //         url: '/guest/get/word-of-a-pouroshava',
-        //         headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-        //         data: { pouroshova: pouroshova},
-        //         dataType: 'JSON',
-        //         beforeSend: function (){
-        //             $("#word-loader").show()
-        //         },
-        //         complete: function (){
-        //             $("#word-loader").hide()
-        //         },
-        //         success: function (response) {
-        //             //console.log(response)
-        //             var wordOption='';
-        //             response.forEach(function(word){
-        //                 wordOption += '<option value='+word.id+'>'+word.name+'</option>';
-        //             })
-        //             $("#word-id").append(wordOption);
-
-        //             $("#word-id").select2({
-        //                 placeholder: "Search Road",
-        //                 allowClear: true,
-        //             });
-        //         },
-        //         error: function (xhr) {
-        //             var errorMessage = '<div class="card bg-danger">\n' +
-        //                 '                        <div class="card-body text-center p-5">\n' +
-        //                 '                            <span class="text-white">';
-        //             $.each(xhr.responseJSON.errors, function(key,value) {
-        //                 errorMessage +=(''+value+'<br>');
-        //             });
-        //             errorMessage +='</span>\n' +
-        //                 '                        </div>\n' +
-        //                 '                    </div>';
-        //             Swal.fire({
-        //                 icon: 'error',
-        //                 title: 'Oops...',
-        //                 footer: errorMessage
-        //             })
-        //         },
-        //     })
-        // });
 
 
         $('#phonBtnNext').click(function(){
@@ -725,15 +617,6 @@ button:hover {
                 $("#personalInfoBtnNext").prop("disabled", false);
             }
 
-            // if($.trim($('#category-id').val()).length == 0){
-            //     error_category = 'Category is required';
-            //     $('#error_category').text(error_category);
-            //     $('#category-id').addClass('has-error');
-            // }else{
-            //     error_category = '';
-            //     $('#error_category').text(error_category);
-            //     $('#category-id').removeClass('has-error');
-            // }
             if($.trim($('#worker_service').val()).length == 0){
                 error_service = 'Service is required';
                 $('#error_service').text(error_service);
@@ -838,26 +721,15 @@ button:hover {
                 $('#confirm-password').addClass('has-error');
                 $("#register").prop("disabled", false);
             }else{
-                // if ($('#password').val() == $('#confirm-password').val()){
-                //     error_confirmpassword = 'Password not match';
-                //     $('#error_confirmpassword').text(error_confirmpassword);
-                //     $('#confirm-password').addClass('has-error');
-                // }else{
                     error_confirmpassword = '';
                     $('#error_confirmpassword').text(error_confirmpassword);
                     $('#confirm-password').removeClass('has-error');
-                // }
             }
           
             if(error_username != '' || error_password != '' || error_confirmpassword != ''){
                 return false;
                 $("#register").prop("disabled", false);
             }else{
-
-                // var servicesId = [];
-                // $('#services-id :selected').each(function(i, selectedElement) {
-                //     servicesId[i] = $(selectedElement).val();
-                // });
 
                //console.log(getInput());
                 var userName = $('#user-name').val();
