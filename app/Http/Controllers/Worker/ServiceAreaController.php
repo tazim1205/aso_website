@@ -140,19 +140,19 @@ class ServiceAreaController extends Controller
         foreach($puroshova as $row){
         echo '<div class="col-lg-12"></div>
         <div class="col-lg-12 mt-3">
-            <div class="d-flex justify-content-between bg-success p-2" style="border-radius: 5px;">
+            <div class="d-flex justify-content-between blue-1 p-2" style="border-radius: 5px;">
                 <div class="text-light text-capitalize">
                     '.$row->name.'
                 </div>
                 
             </div>
-            <div class="mt-1" style="border-radius: 5px;border: 1px solid #00bb32;">';   
+            <div class="mt-1" style="border-radius: 5px;">';   
                 $words = Word::where('puroshova_id', $row->id)
                                     ->get();
                 foreach($words as $w){
                 echo '
                 <div class="d-flex justify-content-between p-2" >
-                    <div class="text-capitalize" style="color: #027321;">
+                    <div class="text-capitalize">
                        '.$w->name.'
                     </div>
                     <div class=" text-success">';

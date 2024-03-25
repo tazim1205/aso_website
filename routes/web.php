@@ -227,6 +227,11 @@ Route::group(['namespace' => 'Admin', 'as' => 'admin.', 'prefix' => 'admin', 'mi
     Route::post('/page/faq/update', 'PagesController@faqUpdate');
     Route::post('/page/faq/destroy', 'PagesController@faqDestroy')->name('faq.destroy');
 
+    Route::get('/page/training-video', 'PagesController@trainingsVideo')->name('page.training-video');
+    Route::post('/page/training-video/store', 'PagesController@trainingsVideostore')->name('page.training-video.store');
+    Route::post('/page/training-video/update', 'PagesController@trainingsVideoupdate')->name('page.training-video.update');
+    Route::post('/page/training-video/delete', 'PagesController@trainingsVideodelete')->name('page.training-video.delete');
+
     Route::get('/page/service/details', 'PagesController@servicedetailsindex')->name('page.service.details');
     Route::post('/page/service/details/store', 'PagesController@servicedetailsStore');
     Route::post('/page/service/details/update', 'PagesController@servicedetailsUpdate');
@@ -409,11 +414,11 @@ Route::group(['namespace' => 'MarketingPanel', 'as' => 'marketing_panel.', 'pref
 
 
     // basic information
-    Route::resource('basic', 'BasicInformationController');
-    Route::get('training-video/', 'BasicInformationController@trainingVideo')->name('trainingvideos');
-    Route::post('training-video/store', 'BasicInformationController@trainingVideostore')->name('trainingvideos.store');
-    Route::post('training-video/update', 'BasicInformationController@trainingVideoupdate')->name('trainingvideos.update');
-    Route::post('training-video/delete', 'BasicInformationController@trainingVideodelete')->name('trainingvideos.delete');
+    // Route::resource('basic', 'BasicInformationController');
+    // Route::get('training-video/', 'BasicInformationController@trainingVideo')->name('trainingvideos');
+    // Route::post('training-video/store', 'BasicInformationController@trainingVideostore')->name('trainingvideos.store');
+    // Route::post('training-video/update', 'BasicInformationController@trainingVideoupdate')->name('trainingvideos.update');
+    // Route::post('training-video/delete', 'BasicInformationController@trainingVideodelete')->name('trainingvideos.delete');
 
     Route::get('helpline/', 'BasicInformationController@helpline')->name('helpline');
     Route::post('helpline/store', 'BasicInformationController@helplinestore')->name('helpline.store');
@@ -534,6 +539,8 @@ Route::group(['namespace' => 'Worker', 'as' => 'worker.', 'prefix' => 'worker', 
     //Profile
     Route::get('/profile', 'ProfileController@index')->name('profile.index');
     Route::post('/profile/upload-useful-doc', 'ProfileController@uploadFile')->name('uploadFile');
+    Route::get('/profile/upload_document', 'ProfileController@upload_document')->name('profile.upload_document');
+    Route::get('/profile/service_view', 'ProfileController@service_view')->name('profile.service_view');
     Route::post('/add/stories', 'ProfileController@addStories')->name('add.stories');
 
     Route::get('/profile/edit', 'ProfileController@edit')->name('profile.edit');

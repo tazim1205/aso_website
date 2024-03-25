@@ -1,6 +1,7 @@
 @extends('guest.layout')
 
 @section('content')
+
 <div class="my-container">
         <div class="pera">
             <p>আপনার একাউন্ট সফলভাবে তৈরি হয়েছে..আপনার সব ডকুমেন্ট চেক

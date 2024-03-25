@@ -4,41 +4,38 @@
 
 @endpush
 @section('content')
-    <!-- Start title -->
-   <div class="">
-       <div class="alert alert-warning text-center" role="alert">
-           <b id="bid-job">{{ __('NOTIFICATIONS') }}</b>
-       </div>
-   </div>
-    <!-- End title -->
-    <div class="container">
-        <div class="row">
-            <div class="col-12 px-0">
-                <div class="list-group list-group-flush ">
-                    @foreach(auth()->user()->notifications as $notification)
-                        <a class="list-group-item border-top @if(!$notification->read_at) active @endif text-dark" href="{{ url($notification->data['url']) }}">
-                            <div class="row">
-                                <div class="col-auto align-self-center">
-                                    <i class="material-icons text-template-primary">@if($notification->read_at) notifications @else notifications_active @endif</i>
-                                </div>
-                                <div class="col pl-0">
-                                    <div class="row mb-1">
-                                        <div class="col">
-                                            <p class="mb-0">{{ $notification->data['title'] }}</p>
-                                        </div>
-                                        <div class="col-auto pl-0">
-                                            <p class="small text-mute text-trucated mt-1">{{ $notification->created_at->format('h:m a d/m/Y') }}</p>
-                                        </div>
-                                    </div>
-                                    <p class="small text-mute">{{ $notification->data['message'] }}</p>
-                                </div>
-                            </div>
-                        </a>
-                        @php $notification->markAsRead(); @endphp
-                    @endforeach
+    <div class="notification-area">
+        <div class="noti-alram">
+            <h3>You have <span>{{ auth()->user()->unreadNotifications->count() }} notifications </span>today</h3>
+        </div>
+        @foreach(auth()->user()->notifications as $notification)
+            <div class="noti-cont-area">
+                <div class="noti-icon">
+                    <div class="noti-dot">
+                        <div class="noti-dot-img">
+                            <img src="{{ asset('frontend/image/Ellipse 60.png') }}" alt="" />
+                        </div>
+                    </div>
+                    <div class="noti-ball">
+                        <div class="noti-ball-img">
+                            <img src="{{ asset('frontend/image/bell (1).png') }}" alt="" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="noti-cont">
+                    <div class="noti-head"><h3><a href="{{ url($notification->data['url']) }}">{{ $notification->data['title'] }}</a></h3></div>
+                    <div class="noti-foot">
+                        <div class="noti-msg">
+                            <p>{{ $notification->data['message'] }}</p>
+                            <p>{{ $notification->created_at->format('h:m a d/m/Y') }}</p>
+                        </div>
+                        <div class="noti-time"><p></p></div>
+                    </div>
                 </div>
             </div>
-        </div>
+            @php $notification->markAsRead(); @endphp
+        @endforeach
     </div>
 
 

@@ -97,9 +97,9 @@
                     <span class="menu-title" data-i18n="">Basic Information</span>
                 </a>
                 <ul class="menu-content">
-                    <li>
+                    {{--<li>
                         <a href="{{ route('marketing_panel.trainingvideos') }}" class="menu-item">Training Videos</a>
-                    </li>
+                    </li>--}}
                     <li>
                         <a href="{{ route('marketing_panel.helpline') }}" class="menu-item">Helpline</a>
                     </li>

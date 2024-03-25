@@ -156,7 +156,7 @@
                         <br>
                     </div>
                     <div class="col">
-                        <a href="{{ route('worker.outofwork') }}" class="btn btn-default btn-lg btn-rounded bg-success shadow btn-block">Yes</a>
+                        <a href="{{ route('worker.outofwork') }}" class="btn btn-default btn-lg btn-rounded blue-1 shadow btn-block">Yes</a>
                     </div>
                     <div class="col">
                         <button type="button" class="btn btn-default btn-lg btn-rounded bg-danger shadow btn-block" data-dismiss="modal">No</button>
@@ -182,7 +182,7 @@
                         <br>
                     </div>
                     <div class="col">
-                        <a href="{{ route('worker.inwork') }}" class="btn btn-default btn-lg btn-rounded bg-success shadow btn-block">Yes</a>
+                        <a href="{{ route('worker.inwork') }}" class="btn btn-default btn-lg btn-rounded blue-1 shadow btn-block">Yes</a>
                     </div>
                     <div class="col">
                         <button type="button" class="btn btn-default btn-lg btn-rounded bg-danger shadow btn-block" data-dismiss="modal">No</button>
@@ -201,30 +201,31 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body pt-0">
-                <div class="row mx-0">
+            <div class="modal-body pt-2">
+                <!-- <div class="row mx-0">
                     <div class="col-12 container text-center small">
                         <p>{{ __('অর্ডার প্রাইস বৃদ্ধি করতে সার্ভিস প্রোভাইডার বা ওয়ার্কারকে তার ব্যালেন্স বৃদ্ধি করতে বলুন।') }}</p>
                     </div>
-                </div>
-                <hr class="bg-success">
+                </div> -->
+                <hr class="blue-1">
                 <div class="row mx-0">
                     <div class="col text-center">
                        <span>{{__('বর্তমান ব্যালেন্স')}}</span><br>
-                       <strong class="text-success">{{ auth()->user()->recharge_amount }}</strong> টাকা
+                       <strong style="color: #141727">{{ auth()->user()->recharge_amount }}</strong> টাকা
                     </div>
                     <div class="col text-center">
                         <span>{{__('অর্ডার রিসিভ লিমিট')}}</span><br>
-                        <strong class="text-success">{{  \App\User::worker_bid_gig_limit(auth()->user()->id) }}</strong> টাকা পর্যন্ত 
+                        <strong style="color: #141727">{{  \App\User::worker_bid_gig_limit(auth()->user()->id) }}</strong> টাকা পর্যন্ত 
                     </div>
                 </div>
-                <hr class="bg-success">
+                <hr class="blue-1">
                 <div class="row mx-0">
                     <div class="col">
-                        <a href="{{ route('shurjopay.getPaymentView',500) }}" class="btn btn-default btn-lg btn-rounded bg-success shadow btn-block">{{ __('Recharge Now') }}</a>
+                        <a href="{{ route('shurjopay.getPaymentView',500) }}" class="btn btn-default btn-lg btn-rounded blue-1 shadow btn-block">{{ __('Recharge Now') }}</a>
                     </div>
                     <div class="col">
-                        <a href="" data-dismiss="modal" aria-label="Close" class="btn btn-default btn-lg btn-rounded bg-secondary shadow btn-block">{{ __('Later') }}</a>
+                        <a href="" data-dismiss="modal" aria-label="Close" class="btn btn-default btn-lg btn-rounded btn btn-secondary shadow btn-block">{{ __('Later') }}</a>
+                        <!-- <button type="button" class="btn btn-secondary mr-2" data-dismiss="modal">Close</button> -->
                     </div>
                 </div>
             </div>
@@ -247,7 +248,7 @@
                         <p>{{ __('অর্ডারটির প্রাইস বাড়াতে আপনার ব্যালেন্স বৃদ্ধি করুন। ') }}</p>
                     </div>
                 </div>
-                <hr class="bg-success">
+                <hr class="blue-1">
                 <div class="row mx-0">
                     <div class="col text-center">
                        <span>{{__('বর্তমান ব্যালেন্স')}}</span><br>
@@ -258,13 +259,13 @@
                         <strong class="text-success">{{  \App\User::worker_bid_gig_limit(auth()->user()->id) }}</strong> টাকা পর্যন্ত 
                     </div>
                 </div>
-                <hr class="bg-success">
+                <hr class="blue-1">
                 <div class="row mx-0">
                     <div class="col">
-                        <a href="{{ route('shurjopay.getPaymentSuccessView') }}" class="btn btn-default btn-lg btn-rounded bg-success shadow btn-block">{{ __('Recharge Now') }}</a>
+                        <a href="{{ route('shurjopay.getPaymentSuccessView') }}" class="btn btn-default btn-lg btn-rounded blue-1 shadow btn-block">{{ __('Recharge Now') }}</a>
                     </div>
                     <div class="col">
-                        <a href="" data-dismiss="modal" aria-label="Close" class="btn btn-default btn-lg btn-rounded bg-secondary shadow btn-block">{{ __('Later') }}</a>
+                        <a href="" data-dismiss="modal" aria-label="Close" class="btn btn-default btn-lg btn-rounded shadow btn-block">{{ __('Later') }}</a>
                     </div>
                 </div>
             </div>
@@ -282,8 +283,9 @@
             </div>
             <div class="modal-body pt-0">
                 <div class="row no-gutters">
-                    <div class="col-12 text-center">
-                        <img src="{{ asset('assets/images/location.png') }}" alt="" class="mx-100 my-5" width="100">
+                    <div class="col-12">
+                        <!-- <img src="{{ asset('assets/images/location.png') }}" alt="" class="mx-100 my-5"> -->
+                        <img src="{{ asset('frontend/image/3196533 1.png') }}" alt="Log in Image" style="width: 50%;margin-left: 25%;">
                     </div>
                 </div>
                 <div class="row mx-0">
@@ -326,13 +328,13 @@
                                 @foreach(App\Puroshova::where('upazila_id', auth()->user()->upazila_id)->get() as $row)
                                 
                                 <div class="col-lg-12 mt-3">
-                                    <div class="d-flex justify-content-between bg-success p-2" style="border-radius: 5px;">
+                                    <div class="d-flex justify-content-between blue-1 p-2" style="border-radius: 5px;">
                                         <div class="text-light text-capitalize">
                                             {{ __($row->name) }}
                                         </div>
                                         
                                     </div>
-                                    <div class="mt-1" style="border-radius: 5px;border: 1px solid #00bb32;">   
+                                    <div class="mt-1" style="border-radius: 5px;">   
                                          @php
                                         $words = DB::table('words')->where('puroshova_id', $row->id)
                                                             ->get();
@@ -341,10 +343,10 @@
                                         @foreach($words as $w)
 
                                         <div class="d-flex justify-content-between p-2" >
-                                            <div class="text-capitalize" style="color: #027321;">
+                                            <div class="text-capitalize">
                                                {{ __($w->name) }}
                                             </div>
-                                            <div class=" text-success">
+                                            <div class=" text-info">
                                                 @if(in_array($w->id, $userword))
                                                 <input type="checkbox" name="word_road_id[]" id="" checked="" value="{{ $w->id }}">
                                                 @else
@@ -360,15 +362,11 @@
                             </div>
 
                             <div class="form-group mt-3">
-                                <textarea name="location" placeholder="আপনার Google Map লিংক " id="" class="form-control form-control-lg" rows="2">{{ auth()->user()->location }}</textarea>
+                                <textarea name="location" placeholder="আপনার Google Map লিংক " id="" class="form-control">{{ auth()->user()->location }}</textarea>
                             </div>
 
-                            <div class="row">
-                                <div class="col-lg-4"></div>
-                                <div class="col-lg-4 form-group mt-3">
-                                    <button type="submit" class="btn btn-success">Save Change</button>
-                                </div>
-                                <div class="col-lg-4"></div>
+                            <div class="pre-next pre-next-1">
+                                <input type="submit" value="Submit" class="blue-1">
                             </div>
                         </form>
                     </div>

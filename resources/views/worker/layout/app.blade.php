@@ -9,14 +9,27 @@
     <meta property="og:image" content="{{ asset(get_static_option('meta_image')) }}" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <!--Bootstrap css-->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="{{ asset('frontend/toast/jquery.toast.min.css') }}">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.3/dist/sweetalert2.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="//cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css">
+    
+    <link href="{{ asset('assets/mobile/vendor/bootstrap-4.4.1/css/bootstrap.min.css') }}" rel="stylesheet">
     <!--main css-->
     <link rel="stylesheet" href="{{ asset('frontend/css/custom.css') }}">
+    <!--SweetAlert 2-->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+    <!--Select2-->
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <!--====== AJAX ======-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <style>
         .jq-toast-wrap.top-right {
             top: 100px !important;
+        }
+        .checkbox{
+            width:12px !important;
+            height:23px !important;
+            padding:3px !important;
         }
     </style>
     @stack('head')
@@ -26,7 +39,33 @@
 @include('includes.logout')
 <!--End logout-->
 <!-- heading-->
-@include('worker.layout.header')
+
+
+
+
+
+<div class="logo-nav">
+    <div class="logo-nav-left">
+        <img src="{{ asset( get_static_option('header_logo')  ?? '/image/aso-logo.png') }}" alt="">
+    </div>
+    <div class="logo-nav-right">
+        <ul>
+            @if(auth()->user()->out_of_work == 0)
+            <li><a href="" class="btn btn-link text-dark position-relative" data-toggle="modal" data-target="#outOfWorkModal"><i class="fa-solid fa-eye"></i></a></li>
+            @else
+            <li><a href="" class="btn btn-link text-dark position-relative" data-toggle="modal" data-target="#inOfWorkModal"><i class="fa-solid fa-eye-slash"></i></a></li>
+            @endif
+            {{-- <li><a href="" class="btn btn-link text-dark position-relative"  data-toggle="modal" data-target="#addStoriesModal"><i class="material-icons header-ifs-sm">add_to_photos</i></a></li> --}}
+
+            <li><a href="{{ route('worker.notifications') }}"><i class="fa-regular fa-bell"></i><span class="counts">({{ auth()->user()->unreadNotifications->count() }})</span></a></li>
+
+            <li><a href="#" class="btn btn-link text-warning position-relative" data-toggle="modal" data-target="#workerAreChangeModal"><i class="fa-solid fa-location-dot location"></i></a></li>
+            {{-- 
+            <li><a href="#" data-toggle="modal" data-target="#workerAreChangeModal" class="list-group-item list-group-item-action @if(Route::is('worker.workerServiceArea')) active @endif"><i class="material-icons icons-raised">map</i></a></li> --}}
+        </ul>
+    </div>
+</div>
+
 
 <div class="icon-nav icon-nav-2">
     <div class="icon-nav-flex">
@@ -53,80 +92,37 @@
 @yield('content')
 
 
-<div class="my-location">
-
-    <div class="login-area loc-area lc-1">
-        <i class="fa-solid fa-xmark colo-2"></i>
-        <div class="login-content">
-
-            <div class="login-img">
-
-                <img src="{{ asset('image/3196533 1.png') }}" alt="Log in Image">
-            </div>
-
-            <div class="login-info loc-head">
-                <h2>আপনার লোকেশন নির্বাচন করুন</h2>
-            </div>
-            <div class="login-form loc-form">
-                <form>
-
-                    <select name="District" placeholder="Feni | ফেনী">
-                        <option value="Dhaka">Select জেলা</option>
-                        <option value="Dhaka">Dhaka</option>
-                        <option value="Dhaka">Dhaka</option>
-                        <option value="Dhaka">Dhaka</option>
-                        <option value="Dhaka">Dhaka</option>
-                        <option value="Dhaka">Dhaka</option>
-                    </select>
 
 
-                    <select name="Upzilla" placeholder="Feni Sadar | ফেনী সদর">
-                        <option value="Dhaka">Select মেট্রোপলিটন থানা / উপজেলা</option>
-                        <option value="Dhaka">Dhaka</option>
-                        <option value="Dhaka">Dhaka</option>
-                        <option value="Dhaka">Dhaka</option>
-                        <option value="Dhaka">Dhaka</option>
-                        <option value="Dhaka">Dhaka</option>
-                    </select>
-
-
-
-                    <select name="Pouroshoba" placeholder="Feni Pouroshova">
-                        <option value="Dhaka">Select এরিয়া /পৌরসভা /ইউনিয়ন</option>
-                        <option value="Dhaka">Dhaka</option>
-                        <option value="Dhaka">Dhaka</option>
-                        <option value="Dhaka">Dhaka</option>
-                        <option value="Dhaka">Dhaka</option>
-                        <option value="Dhaka">Dhaka</option>
-                    </select>
-
-                    <select name="Pouroshoba" placeholder="Select Word/Road">
-                        <option value="Dhaka">Select রোড / ওয়ার্ড</option>
-                        <option value="Dhaka">Dhaka</option>
-                        <option value="Dhaka">Dhaka</option>
-                        <option value="Dhaka">Dhaka</option>
-                        <option value="Dhaka">Dhaka</option>
-                        <option value="Dhaka">Dhaka</option>
-                    </select>
-                    <input type="text" placeholder="আপনার Google Map লিংক">
-                    <input type="submit" value="Save Change">
-                </form>
-
-
-
-
-            </div>
-        </div>
-    </div>
-
-    @include('worker.layout.sidebar')
+@include('worker.layout.sidebar')
 </div>
+
+<!-- Modal -->
+@include('worker.layout.modal')
+@include('worker.layout.member-modal')
+
+<!-- jquery, popper and bootstrap js -->
+<script src="{{ asset('assets/mobile/js/jquery-3.3.1.min.js') }}"></script>
+<script src="{{ asset('assets/mobile/js/popper.min.js') }}"></script>
+<script src="{{ asset('assets/mobile/vendor/bootstrap-4.4.1/js/bootstrap.min.js') }}"></script>
+
+<!-- swiper js -->
+<script src="{{ asset('assets/mobile/vendor/swiper/js/swiper.min.js') }}"></script>
+
+<!-- cookie js -->
+<script src="{{ asset('assets/mobile/vendor/cookie/jquery.cookie.js') }}"></script>
 
 <script src="https://kit.fontawesome.com/45a0bcfe23.js" crossorigin="anonymous"></script>
 <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
 <script src="{{ asset('frontend/toast/jquery.toast.min.js') }}"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.3/dist/sweetalert2.all.min.js"></script>
 <script src="{{ asset('frontend/js/custom.js') }}"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<script src="//cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+<script>
+        let table = new DataTable('#myTable');
+    </script>
 <script>
     @if (Session::has('message'))
     $.toast({
@@ -148,6 +144,72 @@
     })
     @endif
 </script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('select[name="district_id"]').on('change', function(){
+            var district_id = $(this).val();
+            if(district_id) {
+                $.ajax({
+                    url: "{{  url('/get/district/upazila/') }}/"+district_id,
+                    type:"GET",
+                    dataType:"json",
+                    success:function(data) {
+                        var d =$('select[name="upazila_thana_id"]').empty();
+                        $('select[name="upazila_thana_id"]').append('<option value="">সিলেক্ট উপজেলা /মেট্রোপলিটন থানা</option>');
+                        $.each(data, function(key, value){
+                           $('select[name="upazila_thana_id"]').append('<option value="'+ value.id +'">' + value.name + '</option>');
+                        });
+
+                        $('#pouroshava_area_div').empty();
+                    },
+                    
+                });
+            } else {
+                alert('danger');
+            }
+        });
+
+        $('select[name="upazila_thana_id"]').on('change', function(){
+            var upazila_thana_id = $(this).val();
+            if(upazila_thana_id) {
+                $.ajax({
+                    url: "{{  url('/get/pouroshava/word/') }}/"+upazila_thana_id,
+                    type:"GET",
+                    dataType : 'html',
+                    success:function(data) {
+                        var d =$('#pouroshava_area_div').empty();
+                        $('#pouroshava_area_div').html(data);
+                    },
+                    
+                });
+            } else {
+                alert('danger');
+            }
+        });
+
+        $('select[name="pouroshava_union_id"]').on('change', function(){
+            var pouroshava_union_id = $(this).val();
+            if(pouroshava_union_id) {
+                $.ajax({
+                    url: "{{  url('/get/pouroshava-union/word-road/') }}/"+pouroshava_union_id,
+                    type:"GET",
+                    dataType:"json",
+                    success:function(data) {
+                        var d =$('select[name="word_road_id"]').empty();
+                        $.each(data, function(key, value){
+                           $('select[name="word_road_id"]').append('<option value="'+ value.id +'">' + value.name + '</option>');
+                        });
+                    },
+                    
+                });
+            } else {
+                alert('danger');
+            }
+        });
+    });
+
+</script>
+@include('sweetalert::alert')
 @stack('foot')
 </body>
 </html>

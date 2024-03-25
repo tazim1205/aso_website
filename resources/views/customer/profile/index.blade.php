@@ -15,6 +15,13 @@
                     <a href="{{ route('customer.profile.edit') }}"><input type="submit" value="Edit Profile" style="cursor: pointer"></a>
                     <input type="submit" value="Change Password" class="cn-pass">
                 </div>
+                <div class="profile-btn btn btn-info">
+                    @if(auth()->user()->remember_token == 'worker')
+                    <a href="{{ route('change.mode.as.worker') }}"><input type="submit" value="Login As Worker" style="cursor: pointer"></a>
+                    @elseif(auth()->user()->remember_token == 'marketer')
+                    <a href="{{ route('change.mode.as.marketer') }}"><input type="submit" value="Login As Marketer" style="cursor: pointer"></a>
+                    @endif
+                </div>
             </div>
         </div>
         <div class="profile-section">

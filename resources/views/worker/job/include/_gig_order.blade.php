@@ -9,6 +9,49 @@
         </ul>
     </div>
 
+    <!-- admin ads -->
+    <div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner" style="width: 50%;margin-left: 25%;">
+            @foreach($adminAds as $chabi => $ads)
+            <div class="carousel-item @if(isset($chabi)) active @endif">
+                <img src="{{ asset($ads->image) }}" class="d-block w-100" alt="...">
+            </div>
+            @endforeach
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+    <!-- admin ads end -->
+
+    <!-- controller ads area -->
+    <div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+            @foreach($controllerAds as $key => $controllerAdss)
+            <div class="carousel-item @if(isset($key)) active @endif">
+                
+                <a  @if($controllerAdss->url) href="{{ $controllerAdss->url }}" target="_blank" @endif >
+                <img src="{{ asset($controllerAdss->image) }}" class="d-block w-100" alt="...">
+                </a>
+            </div>
+            @endforeach
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+    <!-- controller ads end -->
+
     <div class="order-area tab-1">
 
         <div class="order-comp">
@@ -37,7 +80,7 @@
         </div>
             @endforeach
         @endforeach
-        @include('customer.layout.include._carosole')
+        
     </div>
 
     <div class="order-area tab-2">
@@ -70,7 +113,7 @@
             @endforeach
         @endforeach
 
-        @include('customer.layout.include._carosole')
+        
     </div>
     <div class="order-area tab-3">
 
@@ -97,7 +140,7 @@
         </div>
             @endforeach
         @endforeach
-        @include('customer.layout.include._carosole')
+        
     </div>
 <div class="order-area tab-4">
     <div class="order-comp">
@@ -123,6 +166,6 @@
     </div>
         @endforeach
     @endforeach
-    @include('customer.layout.include._carosole')
+    
 </div>
 </div>

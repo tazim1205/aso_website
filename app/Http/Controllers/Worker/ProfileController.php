@@ -58,6 +58,16 @@ class ProfileController extends Controller
 
         return view('worker.profile.index',compact('thismonthIncome','totalPageErnings','thisMonthTotalPageErnings','total_complete', 'parentsUsers'));
     }
+    
+    public function service_view(){
+
+        return view('worker.profile.service_view');
+    }
+    
+    public function upload_document(){
+
+        return view('worker.profile.upload_document');
+    }
 
     public function uploadFile(Request $request){
     	$request->validate([

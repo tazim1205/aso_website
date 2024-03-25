@@ -122,6 +122,7 @@
                 <li><a href="{{ route('admin.page.privacy.policy') }}"><i class="fa fa-circle-o"></i> Privacy Policy</a></li>
                 <li><a href="{{ route('admin.page.faq') }}"><i class="fa fa-circle-o"></i> FAQ</a></li>
                 <li><a href="{{ route('admin.video.index') }}"><i class="fa fa-circle-o"></i> Video</a></li>
+                <li><a href="{{ route('admin.page.training-video') }}"><i class="fa fa-circle-o"></i> Training Video</a></li>
             </ul>
         </li>
         <li><a href="{{ route('admin.showGeneralInformation') }}" class="waves-effect"><i class="fa fa-circle-o text-aqua"></i>

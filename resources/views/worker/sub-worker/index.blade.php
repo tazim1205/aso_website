@@ -10,24 +10,24 @@
 </style>
 @endpush
 @section('content')
-<div class="container">
-    <div class="card shadow mt-4">
-        <div class="card-header">
-            <h4 class="card-title">Worker List
-                <a class="btn btn-primary float-right" href="{{ route('worker.sub-worker.create') }}"
-                    data-toggle="modal" data-target="#addModal">Add Worker</a>
-            </h4>
 
-        </div>
-        <div class="card-body">
-            @if ($message = Session::get('message'))
-            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                <strong>{{ $message }}</strong>
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+<div class="container">
+    <div class="content-wrapper" style="color: black">
+        <div class="card2">
+            <div class="card-header">
+                <h4 class="card-title">Worker List
+                    <a class="btn blue-1 float-right" href="{{ route('worker.sub-worker.create') }}"
+                        data-toggle="modal" data-target="#addModal">Add Worker</a>
+                </h4>
             </div>
-            @endif
-            <div>
-                <table class="table table-striped table-bordered table-sm">
+            <div class="card-body">
+            @if ($message = Session::get('message'))
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <strong>{{ $message }}</strong>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+                @endif
+                <table class="table table-borderd table-responsive-sm" id="myTable">
                     <thead>
                         <tr>
                             <th>SI</th>
@@ -58,9 +58,9 @@
                                 <small>{{ $user->created_at }}</small>
                             </td>
                             <td>
-                                <a href="#" class="btn btn-success btn-sm" data-toggle="modal"
+                                <a href="#" class="btn blue-1 btn-sm" data-toggle="modal"
                                     data-target="#addModal">Edit</a>
-                                <a class="btn btn-danger btn-sm dltBtn">Delete</a>
+                                <a class="btn btn-danger btn-sm cl-4" style="color: #fff;">Delete</a>
                                 <form id="dltForm" action="{{route('worker.sub-worker.destroy', $user->id)}}"
                                     method="POST">
                                     @csrf
@@ -76,9 +76,7 @@
             </div>
         </div>
     </div>
-
 </div>
-
 
 {{-- Worker Add Modal --}}
 <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="addModalLabel" aria-hidden="true">
@@ -94,13 +92,19 @@
                 @csrf
                 <div class="modal-body">
 
+                <style>
+                    .cl-4{
+                        color: #ff000099;
+                    }
+                </style>
+
                     <div class="form-group">
-                        <label for="name">Name <span class="text-danger">(*)</span></label>
+                        <label for="name">Name <span class="cl-4">(*)</span></label>
                         <input type="text" name="name" class="form-control" id="name" aria-describedby="emailHelp"
                             placeholder="Enter name" required>
                     </div>
                     <div class="form-group">
-                        <label for="phone">Phone <span class="text-danger">(*)</span></label>
+                        <label for="phone">Phone <span class="cl-4">(*)</span></label>
                         <input type="text" class="form-control" id="phone" aria-describedby="emailHelp"
                             placeholder="Enter phone number" name="phone" required>
                     </div>
@@ -112,23 +116,22 @@
                             else.</small>
                     </div>
                     <div class="form-group">
-                        <label for="nid">NID Number <span class="text-danger">(*)</span></label>
+                        <label for="nid">NID Number <span class="cl-4">(*)</span></label>
                         <input type="number" class="form-control" name="nid" id="nid" placeholder="nid" required>
                     </div>
                     <input type="hidden" name="sp_id" value="{{ Auth::user()->id }}">
                     <div class="form-group">
-                        <label for="customFile">Upload Photo <span class="text-danger">(*)</span></label>
+                        <label for="customFile">Upload Photo <span class="cl-4">(*)</span></label>
                         <div class="custom-file">
                             <input type="file" name="image" class="custom-file-input" id="customFile">
                             <label class="custom-file-label" for="customFile">Choose file</label>
                         </div>
                     </div>
                     <div id="imagePreview"></div>
-
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary mr-2" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Add Worker</button>
+                    <button type="submit" class="btn blue-1">Add Worker</button>
                 </div>
             </form>
         </div>
@@ -158,5 +161,15 @@ if(confirm('Are you sure want to delete this data?')){
     }
     });
     });
+</script>
+
+<script>
+    new DataTable('#example', {
+    layout: {
+        topStart: {
+            buttons: ['copy', 'excel', 'pdf', 'colvis']
+        }
+    }
+});
 </script>
 @endsection

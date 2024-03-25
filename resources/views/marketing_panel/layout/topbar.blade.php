@@ -266,7 +266,11 @@
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="{{ route('controller.profile.index') }}"><i class="ft-user"></i> Edit Profile</a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" onclick="logout()" href=""><i class="ft-power"></i> Logout</a>
+                                <a class="dropdown-item" onclick="logout()"><form action="{{ route('logout') }}" method="post">
+                            @csrf
+                            <i class="mdi mdi-logout me-1"></i>
+                            <button class="border-0 px-0 bg-transparent" type="submit"> {{ __('Logout') }}</button>
+                        </form></a>
                             </div>
                         </div>
                     </li>

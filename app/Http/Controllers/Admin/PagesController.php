@@ -9,9 +9,12 @@ use App\ServiceDetail;
 use App\About;
 use App\TermsAndCondition;
 use App\PrivacyPolicy;
+use App\MarketerTrainingVideos;
+use App\User;
 
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Intervention\Image\ImageManagerStatic as Image;
 
@@ -173,6 +176,77 @@ class PagesController extends Controller
         $privacy->save();
         return redirect()->back();
         // return $about;
+    }
+
+    // training 
+
+    public function trainingsVideo()
+    {
+        $user_id = Auth::user()->id;
+        $allads = MarketerTrainingVideos::where('controller_id', $user_id)->orderBy('id', 'desc')->get();
+
+        $customer = MarketerTrainingVideos::where('controller_id', $user_id)->where('video_for', 'Customer')->orderByDesc('id')->get();
+        $marketer = MarketerTrainingVideos::where('controller_id', $user_id)->where('video_for', 'Marketer')->orderByDesc('id')->get();
+        $service_provider = MarketerTrainingVideos::where('controller_id', $user_id)->where('video_for', 'Worker')->orderByDesc('id')->get();
+        return view('admin.page.training-video', compact('customer','marketer','service_provider'));
+    }
+
+    public function trainingsVideostore(Request $request)
+    {
+        $request->validate([
+            'title'           => 'required',
+        ]);
+
+        $user = User::where('id',Auth::user()->id)->first();
+        $ads = new MarketerTrainingVideos();
+        $ads->controller_id = Auth::user()->id;
+        $ads->link = $request->input('detail');
+        $ads->video_for = $request->video_for;
+        $ads->title = $request->input('title');
+
+        if ($request->has('activation') && $request->input('activation') ==1){
+            $ads->status = 1;
+        }else{
+            $ads->status = 0;
+        }
+        $ads->save();
+        return $ads;
+    }
+
+    public function trainingsVideoupdate(Request $request)
+    {
+
+        // return var_dump($request->video_for);
+        // exit();
+
+        $id = $request->input('id');
+        $request->validate([
+            'title'           => 'required',
+            'video_for'           => 'required',
+        ]);
+
+        $ads = MarketerTrainingVideos::find($id);
+        $ads->link = $request->input('detail');
+        $ads->title = $request->input('title');
+        $ads->video_for = $request->video_for;
+
+        if ($request->has('activation') && $request->input('activation') ==1){
+            $ads->status = 1;
+        }else{
+            $ads->status = 0;
+        }
+        $ads->save();
+
+        return $ads;
+    }
+
+    public function trainingsVideodelete(Request $request)
+    {
+        $id = $request->input('id');
+        $ads = MarketerTrainingVideos::find($id);
+
+        $ads->delete();
+        return $ads;
     }
     /**
      * Show the form for creating a new resource.

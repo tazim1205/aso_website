@@ -89,8 +89,9 @@
 
 .login-form input {
     width: 328px;
-    height: 45px;
+    height: 40px;
     padding: 10px 15px;
+    font-size: 14px;
 }
 
 .radio input{
@@ -147,7 +148,7 @@
                         <div class="form-group">
                             <input type="text" minlength="6" maxlength="6" id="referral" class="form-control form-control-lg text-center" placeholder="{{ __('Referral code') }}">
                         </div>
-                        <div class="form-group">
+                        <div class="form-group mt-3">
                             <small>{{ __('Select the District /Metropolitan Thana you want to take service.') }}</small>
                             <select class="form-control form-control-lg" id="district-id">
                                 <option selected disabled> {{ __('Chose district') }}</option>
@@ -168,7 +169,7 @@
                             <span id="error_upazila" class="text-danger"></span>
                         </div>
                         <div class="form-group" id="pouroshova_group">
-                            <small>{{ __('Select the Pouroshova /Union you want to take service.') }}</small>
+                            <small>{{ __('Select the Pouroshova /Union you want to take service.') }}</small><br>
                             <select class="form-control form-control-lg select2" multiple = "multiple" id="pouroshova-id">
                                 <option selected disabled value="" id="pouroshova-loader">
                                     <span class="badge badge-warning mb-1">{{ __('Loading ...') }}</span>
@@ -177,22 +178,9 @@
                             </select>
                             <span id="error_pouroshova" class="text-danger"></span>
                         </div>
-                        {{-- <div class="form-group" id="word_group">
-                            <small>{{ __('Select the Word /Road you want to take service.') }}</small>
-                            <select class="form-control form-control-lg select2" multiple = "multiple" id="word-id">
-                                <option selected disabled value="" id="word-loader">
-                                    <span class="badge badge-warning mb-1">{{ __('Loading ...') }}</span>
-                                </option>
-                                <!-- Insert by ajax -->
-                            </select>
-                            <span id="error_word" class="text-danger"></span>
-                        </div> --}}
-
                         <!-- Start category -->
-                        <div class="form-group">
-                            
-                            
-                            <select name="worker_service" id="worker_service" multiple="multiple" class="form-control" style="width: 100%;">
+                        <div class="form-group mt-3">
+                            <select name="worker_service" id="worker_service" multiple="multiple" class="form-control"  style="width: 22% !important;border: 1px solid #fff !important;">
                                 @foreach($categories as $category)
                                     <optgroup label="{{ $category->name }}">
                                         @foreach($category->services as $service)
@@ -217,7 +205,7 @@
                         <!-- End services -->
 
                         <!-- Start NID  -->
-                        <div class="form-group">
+                        <div class="form-group mt-3">
                             <label>{{ __('NID front side') }}</label>
                             <input type="file" id="nid-front" class="form-control form-control-lg">
                             <span id="error_nid_front" class="text-danger"></span>
@@ -239,22 +227,14 @@
                         </div>
                         <!-- End NID  -->
 
-                        <div class="form-group row mx-0">
-                            <div class="col-6 col-md-6 col-lg-4">
-                                <div class="custom-control custom-radio">
-                                    <input type="radio" name="gender" class="custom-control-input gender" id="male" value="male">
-                                    <label class="custom-control-label" for="male">{{ __('Male') }}</label>
-                                </div>
-                            </div>
-                            <div class="col-6 col-md-6 col-lg-4">
-                                <div class="custom-control custom-radio">
-                                    <input type="radio" name="gender" class="custom-control-input gender" id="female" value="female">
-                                    <label class="custom-control-label" for="female">{{ __('Female') }}</label>
-                                </div>
-                            </div>
+                        <div class="form-group radio mt-3 mb-3">
+                            <input type="radio" name="gender" id="male" value="male">
+                            <label for="male">{{ __('Male') }}</label>
+                            <input type="radio" name="gender" id="female" value="female">
+                            <label for="female">{{ __('Female') }}</label>
                         </div>
-                        <button type="button" class="prevBtn" id="personalInfoBtnPrev">Previous</button>
-                        <button type="button" class="next" id="personalInfoBtnNext">Next</button>
+                        <button type="button" class="prevBtn btn-prev btn-n-1" id="personalInfoBtnPrev">Previous</button>
+                        <button type="button" class="next btn-next" id="personalInfoBtnNext">Next</button>
                     </div>
                     <div class="tab signup-tab d-none mb-2">
                         <p class="mt-2"><b>{{ __('Sign Up Details') }}</b></p>
@@ -270,13 +250,13 @@
                             <input type="password" id="confirm-password" placeholder="{{ __('Confirm Password') }}" required>
                             <span id="error_confirmpassword" class="text-danger"></span>
                         </div>
-                        <button type="button" class="prevBtn" id="sinupBtnPrev">Previous</button>
-                        <button type="button" class="next" id="register">Sign Up</button>
+                        <button type="button" class="prevBtn btn-prev btn-n-1" id="sinupBtnPrev">Previous</button>
+                        <button type="button" class="next btn-next" id="register">Sign Up</button>
                     </div>
                     {{-- <div style="overflow:auto;">
                         <div style="float:center;">
                             <button type="button" id="prevBtn" onclick="nextPrev(-1)">Previous</button>
-                            <button type="button" class="next" id="nextBtn" onclick="nextPrev(1)">Next</button>
+                            <button type="button" class="next btn-next" id="nextBtn" onclick="nextPrev(1)">Next</button>
                         </div>
                     </div> --}}
                     <!-- Circles which indicates the steps of the form: -->

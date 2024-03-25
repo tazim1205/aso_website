@@ -90,12 +90,9 @@ class WelcomeController extends Controller
             ->whereDate('starting', '<', Carbon::today()->addDays(1))
             ->whereDate('ending', '>', Carbon::today()->addDays(-1))
             ->get();
-            
+        
         $ControllerNotice =  ControllerNotice::join('users','users.id','controller_notices.controller_id')->where('users.role','controller')->where('upazila_id',$request->upazila_thana_id)->where('is_active',1)->orderBy('controller_id', 'desc')->get();
-        $controllerAds = ControllerAds::join('users','users.id','controller_ads.controller_id')->where('users.role','controller')->where('upazila_id',$request->upazila_thana_id)
-            ->whereDate('starting', '<', Carbon::today()->addDays(1))
-            ->whereDate('ending', '>', Carbon::today()->addDays(-1))
-            ->get();
+        $controllerAds = ControllerAds::get();
 
         $specialServices = SpecialProfile::all();
         $data = [
