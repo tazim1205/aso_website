@@ -139,9 +139,9 @@
                                                                 </span>
                                                             </span>
                                                             @if($worker->status == 1)
-                                                                <a href="{{ route('controller.userStatus',$worker->id) }}" class="btn btn-outline-danger" title="Decline"><i class="ft-x-square"></i></a>
+                                                                <a href="{{ route('controller.userStatus',$worker->id) }}" class="btn btn-outline-success" title="Decline">Active Worker</a>
                                                             @else
-                                                                <a href="{{ route('controller.userStatus',$worker->id) }}" class="btn btn-outline-success" title="Approve"><i class="ft-check-square"></i></a>
+                                                                <a href="{{ route('controller.userStatus',$worker->id) }}" class="btn btn-outline-danger" title="Approve">Inactive Worker</a>
                                                             @endif
                                                             <a href="{{ route('controller.worker.balance.reset',$worker->id) }}" class="btn btn-outline-dark">Reset Balance</a>
                                                         </td>

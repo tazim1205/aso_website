@@ -42,9 +42,9 @@
                     <a href="#"><input type="submit" value="Change Password" class="cn-pass"></a>
                 </div>
                 <div class="profile-btn">
-                    <a href="{{ route('change.mode.as.customer') }}"><input type="submit" value="Customer"></a>
-                    <a href="{{ route('change.mode.as.customer') }}"><input type="submit" value="WorkerList"></a>
-                    <a href="#"><input type="submit" value="Recharge Now" class="cn-pass"></a>
+                    <a href="{{ route('change.mode.as.customer') }}"><input type="submit" value="Login As Customer"></a>
+                    <a href="{{ route('worker.sub-worker.index') }}"><input type="submit" value="WorkerList"></a>
+                    <a href="" data-toggle="modal" data-target="#rechargeModal" style="margin-left: 10px;"><input type="submit" value="Recharge Now"></a>
                 </div>
             </div>
         </div>
@@ -95,16 +95,13 @@
 
         </div>
 
-
         <div class="use-file">
             <h3>Useful Document / File</h3>
             <div class="pre-next pre-next-1">
-                <a href="service_veiw.html"><input type="text" value="Veiw"></a>
-                <a href="upload_ducument.html"><input type="submit" value="Upload" class="blue-1"></a>
+                <a href="{{ route('worker.profile.service_view') }}"><input type="submit" value="View"></a>
+                <a href="{{ route('worker.profile.upload_document') }}"><input type="submit" value="Upload" class="blue-1"></a>
             </div>
         </div>
-
-
 
 
         <div class="profile-section">
@@ -156,7 +153,12 @@
         </div>
         <div class="profile-section">
             <div class="profile-section-left signout">
-                <p><i class="fas fa-tools" onclick="logout()"></i></p><p>Sign out</p>
+                
+                <form action="{{ route('logout') }}" method="post">
+                    @csrf
+                    <i class="mdi mdi-logout me-1"></i>
+                    <button class="border-0 px-0 bg-transparent" type="submit"> <p><i class="fas fa-tools"></i></p><p>Sign out</p></button>
+                </form>
             </div>
             <div class="profile-section-right"><i class="fas fa-angle-down"></i></div>
         </div>
@@ -180,4 +182,103 @@
 
         </div>
     </div>
+
+
+    <script>
+        $(document).ready(function() {
+            $('#viewFileArea').hide();
+            $('#uploadBtn').on('click', function(e){
+                $('#uploadFormArea').show();
+                $('#viewFileArea').hide();
+
+                $('#uploadBtn').removeClass( "btn-default" );
+                $('#uploadBtn').addClass( "blue-1" );
+
+                $('#viewFileBtn').removeClass( "blue-1" );
+                $('#viewFileBtn').addClass( "btn-default" );
+            });
+            $('#viewFileBtn').on('click', function(e){
+                $('#uploadFormArea').hide();
+                $('#viewFileArea').show();
+
+                $('#viewFileBtn').removeClass( "btn-default" );
+                $('#viewFileBtn').addClass( "blue-1" );
+
+                $('#uploadBtn').removeClass( "blue-1" );
+                $('#uploadBtn').addClass( "btn-default" );
+            });
+            $('#change-password').click(function(){
+                Swal.fire({
+                    title: ' Write password ',
+                    html:
+                    '<input id="current" class="swal2-input" placeholder="Current password">' +
+                    '<input id="password" class="swal2-input" placeholder="New Password">',
+                    inputAttributes: {
+                        autocapitalize: 'off'
+                    },
+                    showCancelButton: true,
+                    confirmButtonText: 'Set',
+                    showLoaderOnConfirm: true,
+                    preConfirm: () => {
+                        var formData = new FormData();
+                        var current = $('#current').val();
+                        var password = $('#password').val();
+                        formData.append('current', current);
+                        formData.append('password', password);
+                        $.ajax({
+                            method: 'POST',
+                            url: "{{ route('authedUserPasswordChange') }}",
+                            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                            data: formData,
+                            processData: false,
+                            contentType: false,
+                            beforeSend: function (){
+                                $(this).prop("disabled",true);
+                            },
+                            complete: function (){
+                                $(this).prop("disabled",false);
+                            },
+                            success: function (data) {
+                                if (data.type == 'success'){
+                                    Swal.fire({
+                                        position: 'top-end',
+                                        icon: data.type,
+                                        title: data.message,
+                                        showConfirmButton: false,
+                                        timer: 1500
+                                    });
+                                    setTimeout(function() {
+                                        location.reload();
+                                    }, 800);//
+                                }else{
+                                    Swal.fire({
+                                        icon: data.type,
+                                        title: 'Oops...',
+                                        text: data.message,
+                                        footer: 'Something went wrong!'
+                                    });
+                                }
+                            },
+                            error: function (xhr) {
+                                var errorMessage = '<div class="card bg-danger">\n' +
+                                    '                        <div class="card-body text-center p-5">\n' +
+                                    '                            <span class="text-white">';
+                                $.each(xhr.responseJSON.errors, function(key,value) {
+                                    errorMessage +=(''+value+'<br>');
+                                });
+                                errorMessage +='</span>\n' +
+                                    '                        </div>\n' +
+                                    '                    </div>';
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Oops...',
+                                    footer: errorMessage
+                                });
+                            },
+                        });
+                    },
+                });
+            });
+        });
+    </script>
 @endsection

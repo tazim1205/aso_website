@@ -7,6 +7,11 @@ use App\GigOrder;
 use App\Http\Controllers\Controller;
 use App\Job;
 use App\PageService;
+use App\District;
+use App\Upazila;
+use App\Puroshova;
+use App\Word;
+use App\ControllerAds;
 
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -20,7 +25,7 @@ class JobController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
 
 
@@ -29,6 +34,19 @@ class JobController extends Controller
             ->whereDate('ending', '>', Carbon::today()->addDays(-1))
             ->get();
         $your_services = PageService::where('worker_id', Auth::id())->get();
-        return view('worker.job.index', compact('adminAds', 'your_services'));
+
+        $controllerAds = ControllerAds::join('users','users.id','controller_ads.controller_id')->where('users.role','controller')->where('upazila_id',$request->upazila_thana_id)
+            ->whereDate('starting', '<', Carbon::today()->addDays(1))
+            ->whereDate('ending', '>', Carbon::today()->addDays(-1))
+            ->get();
+
+        $data = [
+            'district' => District::find($request->district_id, ['name']),
+            'upazila' => Upazila::find($request->upazila_thana_id, ['name']),
+            'puroshova' => Puroshova::find($request->pouroshava_union_id, ['name']),
+            'word' => Word::find($request->word_road_id, ['name']),
+        ];
+
+        return view('worker.job.index', compact('adminAds', 'your_services','controllerAds','data'));
     }
 }

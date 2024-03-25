@@ -16,6 +16,13 @@ use App\ServiceDetail;
 use App\About;
 use App\TermsAndCondition;
 use App\PrivacyPolicy;
+use App\ControllerAds;
+use App\ControllerNotice;
+
+use App\District;
+use App\Upazila;
+use App\Puroshova;
+use App\Word;
 
 use App\User;
 use App\WorkerService;
@@ -28,8 +35,6 @@ use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
 
-use App\District;
-
 class HomeController extends Controller
 {
     /**
@@ -37,8 +42,9 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        
 
         $categories = WorkerServiceCategory::all();
         $adminNotice = AdminNotice::orderBy('id', 'desc')
@@ -48,6 +54,21 @@ class HomeController extends Controller
             ->whereDate('starting', '<', Carbon::today()->addDays(1))
             ->whereDate('ending', '>', Carbon::today()->addDays(-1))
             ->get();
+            
+        $user_id = Auth::user()->id;
+        $controllerAds = ControllerAds::get();
+            
+        // return $user_id;
+
+        $district = $request->input('district') ?? 'Áll';
+        $upazila = $request->input('upazila') ?? 'Áll';
+
+        $notices = ControllerNotice::orderBy('id', 'desc')
+            ->district($district)
+            ->upazila($upazila)
+            ->active()
+            ->get();
+            
             /*
             $c_gigs =DB::table('customer_gigs')
                 ->join('worker_and_services', function ($join) {
@@ -56,7 +77,7 @@ class HomeController extends Controller
                 })->get();
             dd($c_gigs);
             */
-        return view('worker.home.index', compact('categories', 'adminNotice', 'adminAds'));
+        return view('worker.home.index', compact('categories', 'adminNotice', 'adminAds','controllerAds','notices'));
     }
 
 
@@ -94,7 +115,7 @@ class HomeController extends Controller
     public function trainingVideo()
     {
         $user_id = Auth::user();
-        $allVideo = MarketerTrainingVideos::where('district_id', $user_id->district_id)->where('upazila_id', $user_id->upazila_id)->where('status',1)->where('video_for','Worker')->orderBy('id', 'desc')->get();
+        $allVideo = MarketerTrainingVideos::where('status',1)->where('video_for','Worker')->orderBy('id', 'desc')->get();
         return view('worker.others.training-video', compact('allVideo'));
     }
 

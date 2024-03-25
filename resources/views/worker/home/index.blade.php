@@ -3,7 +3,31 @@
 
 @section('content')
 
-    <div class="all-bid"><a href="#">সার্ভিসসমূহ</a></div>
+    <div class="wrapper-area">
+        
+        <!-- admin ads area -->
+
+        <div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner">
+                @foreach($adminAds as $chabi => $ads)
+                <div class="carousel-item @if(isset($chabi)) active @endif">
+                    <img src="{{ asset($ads->image) }}" class="d-block w-100" alt="...">
+                </div>
+                @endforeach
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+
+    </div>
+
+    <div class="all-bid"><a href="#">ক্যাটাগরি | জব অফার</a></div>
 
     <div class="wrapper-area">
         <div class="catagory-h3"><h3></h3> </div>
@@ -24,12 +48,65 @@
     </div>
 
 
+    <!-- controller ads area -->
+    <div class="wrapper-area">
+        <div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner">
+                @foreach($controllerAds as $key => $controllerAdss)
+                <div class="carousel-item @if(isset($key)) active @endif">
+                    <img src="{{ asset($controllerAdss->image) }}" class="d-block w-100" alt="...">
+                </div>
+                @endforeach
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+    </div>
+    <br>
+    <br>
+
+
+    {{--<div class="swiper-container offer-slide swiper-container-horizontal swiper-container-android">
+        <div class="swiper-wrapper" style="transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;">
+            @foreach((array) auth()->user()->upazila->controllers as $controller)
+                @foreach($controller->controllerAds as $controllerAds)
+                    <div class="swiper-slide swiper-slide-active">
+                        <div class="card">
+                            <div class="card-body">
+                                <a  @if($controllerAds->url) href="{{ $controllerAds->url }}" target="_blank" @endif >
+                                    <img src="{{ asset($controllerAds->image) }}" height="100%" width="100%" style="border-radius: 5px;">
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
+            @endforeach
+        </div>
+        <span class="swiper-notification" aria-live="assertive" aria-atomic="true"></span>
+    </div>--}}
+
+
 
     <div class="wrapper-area">
         @foreach($adminNotice as $adminNotice)
             <div class="catagory-details">
                 <h3>{{ $adminNotice->title }}</h3>
                 <p>{!! $adminNotice->detail !!}</p>
+            </div>
+        @endforeach
+    </div>
+
+    <div class="wrapper-area">
+        @foreach($notices as $controllerNotices)
+            <div class="catagory-details">
+                <h3>{{ $controllerNotices->title }}</h3>
+                <p>{!! $controllerNotices->detail !!}</p>
             </div>
         @endforeach
     </div>
